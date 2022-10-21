@@ -1,13 +1,7 @@
-import Axios from "axios";
-import {
-  call,
-  delay,
-  fork,
-  take,
-  takeEvery,
-  takeLatest,
-  put,
-} from "redux-saga/effects";
+import { call, delay, put, takeLatest } from "redux-saga/effects";
+import { toDoListService } from "../../services/ToDoListService";
+import { STATUS_CODE } from "../../util/constants/settingSystem";
+import { DISPLAY_LOADING, HIDE_LOADING } from "../constants/LoadingConst";
 import {
   ADD_TASK_API,
   CHECK_TASK_API,
@@ -16,9 +10,6 @@ import {
   GET_TASK_API,
   REJECT_TASK_API,
 } from "../constants/ToDoListConst";
-import { toDoListService } from "../../services/ToDoListService";
-import { STATUS_CODE } from "../../util/constants/settingSystem";
-import { DISPLAY_LOADING, HIDE_LOADING } from "../constants/LoadingConst";
 /*redux 2 loại action: 
     Loại 1: action => object (action thường)
     Loại 2: action => function (thường dùng để xử lý api hoặc gọi các action khác )
