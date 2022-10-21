@@ -47,12 +47,12 @@ export default function BaiTapToDoListSaga(props) {
     });
   };
 
-  //   const getTaskList = () => {
-  //     //Dispatch action saga
-  //     dispatch({
-  //       type: GET_TASKLIST_API,
-  //     });
-  //   };
+  const getTaskList = () => {
+    //Dispatch action saga
+    dispatch({
+      type: GET_TASKLIST_API,
+    });
+  };
 
   const addTask = (e) => {
     e.preventDefault();
@@ -62,12 +62,12 @@ export default function BaiTapToDoListSaga(props) {
     });
   };
 
-  //   useEffect(() => {
-  //     //Gọi hàm getTaskList
-  //     getTaskList();
+  useEffect(() => {
+    //Gọi hàm getTaskList
+    getTaskList();
 
-  //     return () => {};
-  //   }, []);
+    return () => {};
+  }, []);
 
   //Xử lý reject task
   const rejectTask = (taskName) => {
