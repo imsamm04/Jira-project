@@ -6,7 +6,6 @@ import ToDoListReducer from "./reducers/ToDoListReducer";
 
 //middleware saga
 import createMiddleWareSaga from "redux-saga";
-import { drawerReducer } from "./reducers/DrawerCyberbugs";
 import { HistoryReducer } from "./reducers/HistoryReducer";
 import { UserLoginCyberBugsReducer } from "./reducers/UserCyberBugsReducer";
 import { rootSaga } from "./sagas/rootSaga";
@@ -19,7 +18,6 @@ const rootReducer = combineReducers({
   ModalReducer,
   HistoryReducer,
   UserLoginCyberBugsReducer,
-  drawerReducer,
 });
 
 const store = createStore(

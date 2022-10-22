@@ -5,18 +5,21 @@ import LoadingComponent from "./components/GlobalSetting/LoadingComponent/Loadin
 import About from "./pages/About/About";
 import BaiTapToDoListSaga from "./pages/BaiTapToDoListSaga/BaiTapToDoListSaga";
 import Contact from "./pages/Contact/Contact";
+import LoginCyberBugs from "./pages/CyberBugs/LoginCyberBugs/LoginCyberBugs";
 import Demo from "./pages/Demo/Demo";
 import DemoDragDrop from "./pages/DemoDragDrop/DemoDragDrop";
 import DemoHOCModal from "./pages/DemoHOCModal/DemoHOCModal";
 import Detail from "./pages/Detail/Detail";
 import DragAndDropDnD from "./pages/DragAndDropDnD/DragAndDropDnD";
 import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import Profile from "./pages/Profile/Profile";
 import Todolist from "./pages/Todolist/Todolist";
 import ToDoListRedux from "./pages/Todolist/ToDoListRedux";
 import TodolistRFC from "./pages/Todolist/TodolistRFC";
 import { HomeTemplate } from "./templates/HomeTemplate/HomeTemplate";
+import { UserLoginTemplate } from "./templates/HomeTemplate/UserLoginTemplate";
 
 function App() {
   const history = useHistory();
@@ -46,6 +49,7 @@ function App() {
         <HomeTemplate exact path="/todolistrfc" Component={TodolistRFC} />
         <HomeTemplate exact path="/todolistrcc" Component={Todolist} />
         <HomeTemplate exact path="/todolistredux" Component={ToDoListRedux} />
+        <UserLoginTemplate exact path="/login" Component={LoginCyberBugs} />
         <HomeTemplate
           exact
           path="/todolistsaga"
