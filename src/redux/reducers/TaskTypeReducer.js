@@ -1,16 +1,15 @@
-import { GET_ALL_TASK_TYPE } from "../constants/Cyberbugs/TaskTypeConstants"
+import { GET_ALL_TASK_TYPE } from "../constants/Cyberbugs/TaskTypeConstants";
 
 const initialState = {
-    arrTaskType: []
-}
+  arrTaskType: [],
+};
 
 export const TaskTypeReducer = (state = initialState, action) => {
-    switch (action.type) {
-
+  switch (action.type) {
     case GET_ALL_TASK_TYPE:
-        return { ...state, arrTaskType:action.arrTaskType }
+      return { ...state, arrTaskType: action.arrTaskType };
 
     default:
-        return state
-    }
-}
+      return state;
+  }
+};

@@ -1,20 +1,19 @@
 import { DISPLAY_LOADING, HIDE_LOADING } from "../constants/LoadingConst";
 
 const initialState = {
-    isLoading:false
-}
+  isLoading: false,
+};
 
 export default (state = initialState, action) => {
-    switch (action.type) {
-
+  switch (action.type) {
     case DISPLAY_LOADING:
-        state.isLoading = true;
-        return { ...state }
-    case HIDE_LOADING:{
-        state.isLoading=false;
-        return {...state}
+      state.isLoading = true;
+      return { ...state };
+    case HIDE_LOADING: {
+      state.isLoading = false;
+      return { ...state };
     }
     default:
-        return state
-    }
-}
+      return state;
+  }
+};

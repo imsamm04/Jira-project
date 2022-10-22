@@ -17,7 +17,6 @@ import Todolist from "./pages/Todolist/Todolist";
 import ToDoListRedux from "./pages/Todolist/ToDoListRedux";
 import TodolistRFC from "./pages/Todolist/TodolistRFC";
 import { HomeTemplate } from "./templates/HomeTemplate/HomeTemplate";
-import { UserLoginTemplate } from "./templates/HomeTemplate/UserLoginTemplate";
 
 function App() {
   const history = useHistory();
@@ -41,7 +40,7 @@ function App() {
         <HomeTemplate path="/home" exact Component={Home} />
         <HomeTemplate exact path="/contact" Component={Contact} />
         <HomeTemplate exact path="/about" Component={About} />
-        <HomeTemplate exact path="/dragdrop" Component={DemoDragDrop} />>
+        <HomeTemplate exact path="/dragdrop" Component={DemoDragDrop} />
         <HomeTemplate exact path="/detail/:id" Component={Detail} />
         <HomeTemplate exact path="/profile" Component={Profile} />
         <HomeTemplate exact path="/todolistrfc" Component={TodolistRFC} />
