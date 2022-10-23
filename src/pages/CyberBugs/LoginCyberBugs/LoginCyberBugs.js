@@ -15,6 +15,7 @@ import { singinCyberbugAction } from "../../../redux/actions/CyberBugsActions";
 function LoginCyberBug(props) {
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
     props;
+  console.log("props--- co ca redux dispatch", props);
   return (
     <form
       onSubmit={handleSubmit}
@@ -97,7 +98,7 @@ const LoginCyberBugWithFormik = withFormik({
       .max(32, "Password must have max 32 characters"),
   }),
 
-  handleSubmit: ({ email, password }, { props, setSubmitting }) => {
+  handleSubmit: ({ email, password }, { props }) => {
     // let action = {
     //   type: USER_SIGNIN_API,
     //   userLogin: {
