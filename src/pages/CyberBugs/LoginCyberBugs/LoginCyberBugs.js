@@ -5,11 +5,22 @@ import {
   TwitterOutlined,
 } from "@ant-design/icons";
 import { Input, Button } from "antd";
+import { withFormik } from "formik";
+import * as Yup from "yup";
+import { connect, dispatch } from "react-redux";
 // import {  } from "antd/lib/radio";
+import { USER_SIGNIN_API } from "../../../redux/constants/Cyberbugs/Cyberbugs";
+import { singinCyberbugAction } from "../../../redux/actions/CyberBugsActions";
 
-export default function LoginCyberBug() {
+function LoginCyberBug(props) {
+  const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
+    props;
   return (
-    <form className="container" style={{ height: window.innerHeight }}>
+    <form
+      onSubmit={handleSubmit}
+      className="container"
+      style={{ height: window.innerHeight }}
+    >
       <div
         className="d-flex flex-column justify-content-center align-items-center"
         style={{ height: window.innerHeight }}
@@ -17,6 +28,7 @@ export default function LoginCyberBug() {
         <h3>Login CyberBugs</h3>
         <div className="d-flex mt-3">
           <Input
+            onChange={handleChange}
             style={{ width: "100%", minWidth: 300 }}
             name="email"
             size="large"
@@ -26,6 +38,7 @@ export default function LoginCyberBug() {
         </div>
         <div className="d-flex mt-3">
           <Input
+            onChange={handleChange}
             style={{ width: "100%", minWidth: 300 }}
             type="password"
             name="password"
@@ -34,6 +47,7 @@ export default function LoginCyberBug() {
             prefix={<UnlockOutlined />}
           />
         </div>
+        <div className="text-danger">{errors.password}</div>
         <Button
           htmlType="submit"
           size="large"
@@ -67,3 +81,36 @@ export default function LoginCyberBug() {
     </form>
   );
 }
+
+const LoginCyberBugWithFormik = withFormik({
+  mapPropsToValues: () => ({ email: "", password: "" }),
+
+  // Custom sync validation
+  validationSchema: Yup.object().shape({
+    email: Yup.string()
+      .required("Email is required")
+      .email("Email is invalid!"),
+
+    password: Yup.string()
+      .required("Password is required")
+      .min(6, "Password must have in 6 characters")
+      .max(32, "Password must have max 32 characters"),
+  }),
+
+  handleSubmit: ({ email, password }, { props, setSubmitting }) => {
+    // let action = {
+    //   type: USER_SIGNIN_API,
+    //   userLogin: {
+    //     email: values.email,
+    //     password: values.password,
+    //   },
+    // };
+
+    props.dispatch(singinCyberbugAction(email, password));
+    console.log("props redux", props);
+  },
+
+  displayName: "BasicForm",
+})(LoginCyberBug);
+
+export default connect()(LoginCyberBugWithFormik);

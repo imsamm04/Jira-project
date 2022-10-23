@@ -1,6 +1,7 @@
 import { USER_SIGNIN_API } from "../constants/Cyberbugs/Cyberbugs";
 
 export const singinCyberbugAction = (email, password) => {
+  debugger;
   return {
     type: USER_SIGNIN_API,
     userLogin: {
