@@ -22,12 +22,6 @@ import { HomeTemplate } from "./templates/HomeTemplate/HomeTemplate";
 import { UserLoginTemplate } from "./templates/HomeTemplate/UserLoginTemplate";
 
 function App() {
-  const history = useHistory();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch({ type: "ADD_HISTORY", history: history });
-  }, []);
-
   return (
     <div>
       {/* <Modal /> */}

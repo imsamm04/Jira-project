@@ -1,7 +1,7 @@
 import { put, takeLatest, delay, call } from "redux-saga/effects";
 import { cyberbugsService } from "../../../services/CyberbugsService";
 import { TOKEN, USER_LOGIN } from "../../../util/constants/settingSystem";
-import { USER_SIGNIN_API } from "../../constants/Cyberbugs/Cyberbugs";
+import { USER_SIGNIN_API, USLOGIN } from "../../constants/Cyberbugs/Cyberbugs";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../../constants/LoadingConst";
 import { push } from "react-router-redux";
 import { history } from "../../../util/history";
@@ -28,8 +28,12 @@ function* signinSaga(action) {
     //Luu vao local storage
     localStorage.setItem(TOKEN, data.content.accessToken);
     localStorage.setItem(USER_LOGIN, JSON.stringify(data.content));
-    console.log("push", push);
-    // action.userLogin.history.push("/home");
+
+    yield put({
+      type: USLOGIN,
+      userLogin: data.content,
+    });
+
     history.push("/home");
   } catch (err) {
     console.log("error", err.response.data);
