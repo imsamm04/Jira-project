@@ -6,8 +6,15 @@ import { GET_ALL_PROJECT_CATEGORY_SAGA } from "../../../redux/constants/Cyberbug
 
 function CreateProject(props) {
   const dispatch = useDispatch();
-  const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
-    props;
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setFieldValue,
+  } = props;
   const arrProjectCategory = useSelector(
     (state) => state.ProjectCategoryReducer.arrProjectCategory
   );
@@ -24,14 +31,9 @@ function CreateProject(props) {
   const onEditorChange = (content, editor) => {
     console.log("content, content");
   };
-  // const log = () => {
-  //   if (editorRef.current) {
-  //     console.log(editorRef.current.getContent());
-  //   }
-  // };
 
   const handleEditorChange = (content) => {
-    console.log("Content was update", content);
+    setFieldValue("description", content);
   };
   return (
     <div className="container m-5">
@@ -74,10 +76,10 @@ function CreateProject(props) {
           <p>Project Category</p>
           <select
             name="categoryId"
-            onChange={handleChange}
             className="form-control"
+            onChange={handleChange}
           >
-            {arrProjectCategory?.map((item, index) => {
+            {arrProjectCategory.map((item, index) => {
               return (
                 <option value={item.id} key={index}>
                   {item.projectCategoryName}
@@ -103,6 +105,10 @@ const createProjectForm = withFormik({
   }),
 
   handleSubmit: (values, { props, setSubmitting }) => {
+    props.dispatch({
+      type: "CREATE_PROJECT_SAGA",
+      newProject: values,
+    });
     console.log("values data submit", values);
   },
 
