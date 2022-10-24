@@ -1,5 +1,7 @@
 import React from "react";
 
-export default function ProjectCyberbugsSaga() {
+const stateDefault = [];
+
+export default function ProjectCyberbugs() {
   return <div>ProjectCyberbugs</div>;
 }
