@@ -1,3 +1,4 @@
+import Modal from "antd/lib/modal/Modal";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Switch, useHistory } from "react-router-dom";
@@ -27,7 +28,7 @@ import { UserLoginTemplate } from "./templates/HomeTemplate/UserLoginTemplate";
 function App() {
   return (
     <div>
-      {/* <Modal /> */}
+      <Modal />
       <LoadingComponent />
       <Switch>
         {/* <Route exact path='/home'  render={(propsRoute)=>{

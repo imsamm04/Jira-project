@@ -8,7 +8,10 @@ export default function LoadingComponent() {
   if (isLoading) {
     return (
       <div className={styleLoading.bgLoading}>
-        <img src={require("../../../assets/imgLoading/loading.gif")} />
+        <img
+          src={require("../../../assets/imgLoading/loading.gif")}
+          alt="true"
+        />
       </div>
     );
   } else {

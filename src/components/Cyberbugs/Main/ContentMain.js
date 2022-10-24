@@ -25,12 +25,13 @@ export default function ContentMain() {
                   <div className="avatar">
                     <img
                       src={require("../../../assets/img/download (1).jfif")}
-                      alt
+                      alt="true"
                     />
                   </div>
                   <div className="avatar">
                     <img
                       src={require("../../../assets/img/download (2).jfif")}
+                      alt="true"
                     />
                   </div>
                 </div>
@@ -51,11 +52,13 @@ export default function ContentMain() {
                   <div className="avatar">
                     <img
                       src={require("../../../assets/img/download (1).jfif")}
+                      alt="true"
                     />
                   </div>
                   <div className="avatar">
                     <img
                       src={require("../../../assets/img/download (2).jfif")}
+                      alt="true"
                     />
                   </div>
                 </div>

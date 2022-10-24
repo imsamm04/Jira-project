@@ -219,7 +219,7 @@ export default class Todolist extends Component {
         </button> */}
         <div className="card">
           <div className="card__header">
-            <img src={require("./bg.png")} />
+            <img src={require("./bg.png")} alt="true" />
           </div>
           {/* <h2>hello!</h2> */}
           <div className="card__body">
