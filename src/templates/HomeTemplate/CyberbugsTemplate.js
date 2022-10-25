@@ -10,7 +10,6 @@ import "../../index.css";
 
 export const CyberbugsTemplate = (props) => {
   const { Component, ...restParam } = props;
-  console.log("props====", props);
   return (
     <Route
       {...restParam}
