@@ -3,7 +3,7 @@ import * as ToDoListSaga from "./ToDoListSaga";
 // import {theoDoiActionGetTaskApi} from './ToDoListSaga'
 import * as Cyberbugs from "./Cyberbugs/UserCyberbugsSaga";
 import * as ProjectCyberbugsSaga from "./Cyberbugs/ProjectCategorySaga";
-import * as CreateProjectCyberbugsSaga from "./Cyberbugs/ProjectSaga";
+import * as ProjectSaga from "./Cyberbugs/ProjectSaga";
 export function* rootSaga() {
   yield all([
     //Nghiệp vụ theo dõi các action saga todolist
@@ -18,6 +18,7 @@ export function* rootSaga() {
     Cyberbugs.theoDoiSign(),
     ProjectCyberbugsSaga.theodoigetAllProjectCategory(),
 
-    CreateProjectCyberbugsSaga.theoDoiCreateProjectSaga(),
+    ProjectSaga.theoDoiCreateProjectSaga(),
+    ProjectSaga.theoDoiGetListProjectSaga(),
   ]);
 }

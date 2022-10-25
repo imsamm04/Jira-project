@@ -2,6 +2,7 @@ import React from "react";
 import { call, put, takeLatest, delay } from "redux-saga/effects";
 import { cyberbugsService } from "../../../services/CyberbugsService";
 import { STATUS_CODE } from "../../../util/constants/settingSystem";
+import { history } from "../../../util/history";
 import {
   GET_ALL_PROJECT_CATEGORY,
   GET_ALL_PROJECT_CATEGORY_SAGA,
@@ -25,6 +26,29 @@ function* createProjectSaga(action) {
       //   type: GET_ALL_PROJECT_CATEGORY,
       //   data: data.content,
       // });
+      history.push("/projectmanagement");
+    }
+  } catch (error) {
+    console.log("error", error);
+  }
+
+  yield put({
+    type: HIDE_LOADING,
+  });
+}
+
+function* getListProjectSaga(action) {
+  //SHOW LOADING
+  try {
+    const { data, status } = yield call(() =>
+      cyberbugsService.getListProject()
+    );
+    if (status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: "GET_LIST_PROJECT",
+        projectList: data.content,
+      });
+      console.log("DATA from api", data);
     }
   } catch (error) {
     console.log("error", error);
@@ -37,4 +61,8 @@ function* createProjectSaga(action) {
 
 export function* theoDoiCreateProjectSaga() {
   yield takeLatest("CREATE_PROJECT_SAGA", createProjectSaga);
+}
+
+export function* theoDoiGetListProjectSaga() {
+  yield takeLatest("GET_LIST_PROJECT_SAGA", getListProjectSaga);
 }

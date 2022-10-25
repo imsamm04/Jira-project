@@ -3,12 +3,14 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Switch, useHistory } from "react-router-dom";
 import LoadingComponent from "./components/GlobalSetting/LoadingComponent/LoadingComponent";
+import DrawerCyberBugs from "./HOC/CyberbugsHOC/DrawerCyberBugs";
 import About from "./pages/About/About";
 import BaiTapToDoListSaga from "./pages/BaiTapToDoListSaga/BaiTapToDoListSaga";
 import Contact from "./pages/Contact/Contact";
 import CreateProject from "./pages/CyberBugs/CreateProject/CreateProject";
 import IndexCyberBugs from "./pages/CyberBugs/IndexCyberBugs";
 import LoginCyberBugs from "./pages/CyberBugs/LoginCyberBugs/LoginCyberBugs";
+import ProjectManagement from "./pages/CyberBugs/ProjectManagement/ProjectManagement";
 import Demo from "./pages/Demo/Demo";
 import DemoDragDrop from "./pages/DemoDragDrop/DemoDragDrop";
 import DemoHOCModal from "./pages/DemoHOCModal/DemoHOCModal";
@@ -29,6 +31,7 @@ function App() {
   return (
     <div>
       <Modal />
+      <DrawerCyberBugs />
       <LoadingComponent />
       <Switch>
         {/* <Route exact path='/home'  render={(propsRoute)=>{
@@ -66,6 +69,11 @@ function App() {
           exact
           path="/createproject"
           Component={CreateProject}
+        />
+        <CyberbugsTemplate
+          exact
+          path="/projectmanagement"
+          Component={ProjectManagement}
         />
 
         <HomeTemplate path="*" component={PageNotFound} />
