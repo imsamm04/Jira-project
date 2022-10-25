@@ -17,13 +17,14 @@ function* createProjectSaga(action) {
   yield delay(500);
   try {
     const { data, status } = yield call(() =>
-      cyberbugsService.createProject(action.newProject)
+      cyberbugsService.createProjectAuthorization(action.newProject)
     );
     if (status === STATUS_CODE.SUCCESS) {
-      yield put({
-        type: GET_ALL_PROJECT_CATEGORY,
-        data: data.content,
-      });
+      // yield put({
+      console.log(data);
+      //   type: GET_ALL_PROJECT_CATEGORY,
+      //   data: data.content,
+      // });
     }
   } catch (error) {
     console.log("error", error);
