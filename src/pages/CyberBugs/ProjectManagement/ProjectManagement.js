@@ -1,10 +1,12 @@
-import { Button, Space, Table, Tag } from "antd";
+import { Button, Popover, Space, Table, Tag } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactHtmlParser from "react-html-parser";
 import { useEffect } from "react";
 import Icon, { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 import FormEditProject from "../../../components/Forms/FormEditProject.js/FormEditProject";
+import Avatar from "antd/lib/avatar/avatar";
+import { AutoComplete } from "antd";
 
 export default function ProjectManagement(props) {
   const projectList = useSelector(
@@ -87,6 +89,40 @@ export default function ProjectManagement(props) {
           return -1;
         }
         return 1;
+      },
+    },
+    {
+      title: "Members",
+      key: "members",
+      render: (text, record, index) => {
+        return (
+          <div>
+            {record.members?.slice(0, 3).map((member, index) => {
+              return <Avatar key={index} src={member.avatar} />;
+            })}
+            {record.members?.length >= 3 ? <Avatar>...</Avatar> : <></>}
+            <Popover
+              placement="rightTop"
+              title={"add user"}
+              content={() => {
+                return (
+                  <AutoComplete
+                    // options={options}
+                    style={{ width: 200 }}
+                    // onSelect={onSelect}
+                    // onSearch={onSearch}
+                    placeholder="input here"
+                  />
+                );
+              }}
+              trigger="click"
+            >
+              <Button shape="circle" size="medium" style={{ top: "2px" }}>
+                +
+              </Button>
+            </Popover>
+          </div>
+        );
       },
     },
     // {
