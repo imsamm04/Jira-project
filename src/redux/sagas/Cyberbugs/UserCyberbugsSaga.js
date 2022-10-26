@@ -5,6 +5,7 @@ import { USER_SIGNIN_API, USLOGIN } from "../../constants/Cyberbugs/Cyberbugs";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../../constants/LoadingConst";
 import { push } from "react-router-redux";
 import { history } from "../../../util/history";
+import { userService } from "../../../services/UserService";
 // import { createBrowserHistory } from "history";
 // const history = createBrowserHistory();
 // quan ly action saga
@@ -45,4 +46,29 @@ function* signinSaga(action) {
 
 export function* theoDoiSign() {
   yield takeLatest(USER_SIGNIN_API, signinSaga);
+}
+
+function* getUserSaga(action) {
+  //action.keyWord
+  console.log("keyword", action.keyWord);
+  //Gọi api
+  try {
+    const { data, status } = yield call(() =>
+      userService.getUser(action.keyWord)
+    );
+
+    console.log("data=>", data);
+
+    yield put({
+      type: "GET_USER_SEARCH",
+      lstUserSearch: data.content,
+    });
+    // console.log("data", data);
+  } catch (err) {
+    console.log(err.response.data);
+  }
+}
+
+export function* theoDoiGetUser() {
+  yield takeLatest("GET_USER_API", getUserSaga);
 }

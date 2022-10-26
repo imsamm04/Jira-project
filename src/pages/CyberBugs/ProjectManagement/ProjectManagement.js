@@ -12,6 +12,11 @@ export default function ProjectManagement(props) {
   const projectList = useSelector(
     (state) => state.ProjectCyberBugsReducer.projectList
   );
+
+  const { userSearch } = useSelector(
+    (state) => state.UserLoginCyberBugsReducer
+  );
+
   console.log("projectList", projectList);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
@@ -107,10 +112,20 @@ export default function ProjectManagement(props) {
               content={() => {
                 return (
                   <AutoComplete
-                    // options={options}
+                    options={userSearch?.map((user, index) => {
+                      return {
+                        label: user.name,
+                        value: user.userId,
+                      };
+                    })}
                     style={{ width: 200 }}
                     // onSelect={onSelect}
-                    // onSearch={onSearch}
+                    onSearch={(value) => {
+                      dispatch({
+                        type: "GET_USER_API",
+                        keyWord: value,
+                      });
+                    }}
                     placeholder="input here"
                   />
                 );
