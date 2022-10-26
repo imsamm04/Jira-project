@@ -40,7 +40,7 @@ function App() {
                 <Home {...propsRoute} />
           </div>
         }}/> */}
-        <HomeTemplate path="/" exact Component={Home} />
+        <CyberbugsTemplate path="/" exact Component={IndexCyberBugs} />
         <HomeTemplate path="/home" exact Component={Home} />
         <HomeTemplate exact path="/contact" Component={Contact} />
         <HomeTemplate exact path="/about" Component={About} />

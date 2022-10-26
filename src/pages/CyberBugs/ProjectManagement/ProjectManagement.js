@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ReactHtmlParser from "react-html-parser";
 import { useEffect } from "react";
 import Icon, { DeleteOutlined, FormOutlined } from "@ant-design/icons";
+import FormEditProject from "../../../components/Forms/FormEditProject.js/FormEditProject";
 
 export default function ProjectManagement(props) {
   const projectList = useSelector(
@@ -105,7 +106,21 @@ export default function ProjectManagement(props) {
       render: (text, record, index) => {
         return (
           <div>
-            <button className="btn mr-2 btn-primary">
+            <button
+              className="btn mr-2 btn-primary"
+              onClick={() => {
+                const action = {
+                  type: "OPEN_FORM_EDIT_PROJECT",
+                  Component: <FormEditProject />,
+                };
+                dispatch(action);
+                const actionEditProject = {
+                  type: "EDIT_PROJECT",
+                  projectEditModal: record,
+                };
+                dispatch(actionEditProject);
+              }}
+            >
               <FormOutlined />
             </button>
             <button className="btn btn-danger">

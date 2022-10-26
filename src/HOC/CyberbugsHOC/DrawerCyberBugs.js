@@ -22,9 +22,8 @@ export default function DrawerCyberBugs(props) {
   //cach 1
   // const visible = useSelector((state) => state.drawerReducer.visible);
   //cach 2
-  const { visible, ComponentContentDrawer } = useSelector(
-    (state) => state.drawerReducer
-  );
+  const { visible, ComponentContentDrawer, callBackSubmit, title } =
+    useSelector((state) => state.drawerReducer);
 
   // const [visible, setVisible] = useState(false);
   const showDrawer = () => {
@@ -41,9 +40,9 @@ export default function DrawerCyberBugs(props) {
   };
   return (
     <>
-      <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
+      {/* <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
         New account
-      </Button>
+      </Button> */}
       <Drawer
         title="Create a new account"
         width={720}
@@ -55,7 +54,7 @@ export default function DrawerCyberBugs(props) {
         extra={
           <Space>
             <Button onClick={onClose}>Cancel</Button>
-            <Button onClick={onClose} type="primary">
+            <Button onClick={callBackSubmit} type="primary">
               Submit
             </Button>
           </Space>

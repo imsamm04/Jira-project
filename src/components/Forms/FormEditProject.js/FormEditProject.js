@@ -22,10 +22,10 @@ function FormEditProject(props) {
     setFieldValue,
   } = props;
 
-  // const submitForm = (e) => {
-  //     e.preventDefault();
-  //     alert('submit edit');
-  // }
+  const submitForm = (e) => {
+    e.preventDefault();
+    alert("submit edit modal");
+  };
 
   //componentdidmount
   useEffect(() => {
@@ -118,7 +118,8 @@ const EditProjectForm = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
     const { projectEdit } = props;
-
+    console.log("projectEdit", projectEdit);
+    //cap nhat du lieu cho formik from reducer
     return {
       id: projectEdit?.id,
       projectName: projectEdit.projectName,
@@ -129,19 +130,21 @@ const EditProjectForm = withFormik({
   validationSchema: Yup.object().shape({}),
   handleSubmit: (values, { props, setSubmitting }) => {
     //Khi người dùng bấm submit => đưa dữ liệu về backedn thông qua api
-    // const action = {
-    //     type:'UPDATE_PROJECT_SAGA',
-    //     prjectUpdate:values
-    // }
-    //Gọi saga
-    props.dispatch({
+    console.log("values", values);
+    const action = {
       type: "UPDATE_PROJECT_SAGA",
-      prjectUpdate: values,
-    });
+      projectUpdate: values,
+    };
+    props.dispatch(action);
+    //Gọi saga
+    // props.dispatch({
+    //   type: "UPDATE_PROJECT_SAGA",
+    //   projectUpdate: values,
+    // });
   },
   displayName: "EditProjectForm",
 })(FormEditProject);
-
+//get data tu redux
 const mapStateToProps = (state) => ({
   projectEdit: state.ProjectReducer.projectEdit,
 });
