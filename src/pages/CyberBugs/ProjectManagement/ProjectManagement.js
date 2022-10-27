@@ -7,6 +7,8 @@ import Icon, { DeleteOutlined, FormOutlined } from "@ant-design/icons";
 import FormEditProject from "../../../components/Forms/FormEditProject.js/FormEditProject";
 import Avatar from "antd/lib/avatar/avatar";
 import { AutoComplete } from "antd";
+import { useRef } from "react";
+import { NavLink } from "react-router-dom";
 
 export default function ProjectManagement(props) {
   const projectList = useSelector(
@@ -21,6 +23,7 @@ export default function ProjectManagement(props) {
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
   const dispatch = useDispatch();
+  const searchRef = useRef(null);
 
   const [value, setValue] = useState("");
 
@@ -59,6 +62,9 @@ export default function ProjectManagement(props) {
       title: "Project Name",
       dataIndex: "projectName",
       key: "projectName",
+      render: (text, record, index) => {
+        return <NavLink to={`/projectdetail/${record.id}`}>{text}</NavLink>;
+      },
       sorter: (item2, item1) => {
         let projectName1 = item1.projectName1?.trim().toLowerCase();
         let projectName2 = item2.projectName2?.trim().toLowerCase();
@@ -196,10 +202,15 @@ export default function ProjectManagement(props) {
                       setValue(text);
                     }}
                     onSearch={(value) => {
-                      dispatch({
-                        type: "GET_USER_API",
-                        keyWord: value,
-                      });
+                      if (searchRef.current) {
+                        clearTimeout(searchRef.current);
+                      }
+                      searchRef.current = setTimeout(() => {
+                        dispatch({
+                          type: "GET_USER_API",
+                          keyWord: value,
+                        });
+                      }, 300);
                     }}
                     placeholder="input here"
                   />

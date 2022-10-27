@@ -75,6 +75,11 @@ function App() {
           path="/projectmanagement"
           Component={ProjectManagement}
         />
+        <CyberbugsTemplate
+          exact
+          path="/projectdetail/:projectId"
+          Component={IndexCyberBugs}
+        />
 
         <HomeTemplate path="*" component={PageNotFound} />
       </Switch>

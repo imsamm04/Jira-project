@@ -1,6 +1,7 @@
 import React from "react";
 import { call, put, takeLatest, delay } from "redux-saga/effects";
 import { cyberbugsService } from "../../../services/CyberbugsService";
+import { projectService } from "../../../services/ProjectService";
 import { STATUS_CODE } from "../../../util/constants/settingSystem";
 import { history } from "../../../util/history";
 import {
@@ -71,7 +72,6 @@ function* updateProjectSaga(action) {
       cyberbugsService.updateProject(action.projectUpdate)
     );
     if (status === STATUS_CODE.SUCCESS) {
-      debugger;
       // yield put({
       //   type: "GET_LIST_PROJECT",
       //   projectList: data.content,
@@ -94,6 +94,31 @@ function* updateProjectSaga(action) {
   });
 }
 
+function* getProjectDetailSaga(action) {
+  //SHOW LOADING
+  yield put({
+    type: DISPLAY_LOADING,
+  });
+  yield delay(500);
+  try {
+    const { data, status } = yield call(() =>
+      projectService.getProjectDetail(action.projectId)
+    );
+    if (status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: "PUT_PROJECT_DETAIL",
+        projectDetail: data.content,
+      });
+    }
+  } catch (error) {
+    console.log("error", error);
+  }
+
+  yield put({
+    type: HIDE_LOADING,
+  });
+}
+
 export function* theoDoiCreateProjectSaga() {
   yield takeLatest("CREATE_PROJECT_SAGA", createProjectSaga);
 }
@@ -104,4 +129,8 @@ export function* theoDoiGetListProjectSaga() {
 
 export function* theoDoiUpdateProjectSaga() {
   yield takeLatest("UPDATE_PROJECT_SAGA", updateProjectSaga);
+}
+
+export function* theoDoiGetProjectDetail() {
+  yield takeLatest("GET_PROJECT_DETAIL", getProjectDetailSaga);
 }
