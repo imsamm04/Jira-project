@@ -1,14 +1,19 @@
-import { Button, Popover, Space, Table, Tag } from "antd";
+import { Button, Popconfirm, Popover, Space, Table, Tag } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactHtmlParser from "react-html-parser";
 import { useEffect } from "react";
-import Icon, { DeleteOutlined, FormOutlined } from "@ant-design/icons";
+import Icon, {
+  DeleteOutlined,
+  FormOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 import FormEditProject from "../../../components/Forms/FormEditProject.js/FormEditProject";
 import Avatar from "antd/lib/avatar/avatar";
 import { AutoComplete } from "antd";
 import { useRef } from "react";
 import { NavLink } from "react-router-dom";
+import confirm from "antd/lib/modal/confirm";
 
 export default function ProjectManagement(props) {
   const projectList = useSelector(
@@ -241,6 +246,26 @@ export default function ProjectManagement(props) {
       dataIndex: "",
       key: "x",
       render: (text, record, index) => {
+        const showDeleteConfirm = () => {
+          confirm({
+            title: "Are you sure delete this Project?",
+            icon: <ExclamationCircleOutlined />,
+            // content: "Some descriptions",
+            okText: "Yes",
+            okType: "danger",
+            cancelText: "No",
+            onOk() {
+              const actionDeleteProject = {
+                type: "DELETE_PROJECT_SAGA",
+                projectId: record.id,
+              };
+              dispatch(actionDeleteProject);
+            },
+            onCancel() {
+              console.log("Cancel");
+            },
+          });
+        };
         return (
           <div>
             <button
@@ -260,9 +285,9 @@ export default function ProjectManagement(props) {
             >
               <FormOutlined />
             </button>
-            <button className="btn btn-danger">
-              <DeleteOutlined />
-            </button>
+            <Button onClick={showDeleteConfirm} type="danger">
+              Delete
+            </Button>
           </div>
         );
       },

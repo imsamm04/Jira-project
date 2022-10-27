@@ -9,7 +9,7 @@ export default function MenuCyberbugs() {
           <img src={require("../../assets/img/download.jfif")} alt="true" />
         </div>
         <div className="account-info">
-          <p>Jira - Clone</p>
+          <h3>Jira - Clone</h3>
           <p>Report bugs</p>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { cyberbugsService } from "../../../services/CyberbugsService";
 import { projectService } from "../../../services/ProjectService";
 import { STATUS_CODE } from "../../../util/constants/settingSystem";
 import { history } from "../../../util/history";
+import { notifiFunction } from "../../../util/Notification/notificationCyberbugs";
 import {
   GET_ALL_PROJECT_CATEGORY,
   GET_ALL_PROJECT_CATEGORY_SAGA,
@@ -119,6 +120,32 @@ function* getProjectDetailSaga(action) {
   });
 }
 
+function* deleteProjectSaga(action) {
+  yield put({
+    type: DISPLAY_LOADING,
+  });
+  yield delay(500);
+  try {
+    const { data, status } = yield call(() =>
+      projectService.deleteProject(action.projectId)
+    );
+    if (status === STATUS_CODE.SUCCESS) {
+      notifiFunction("success", "Delete project successfully !");
+      yield put({
+        type: "GET_LIST_PROJECT_SAGA",
+      });
+    } else {
+      notifiFunction("error", "Delete project fail !");
+    }
+  } catch (error) {
+    notifiFunction("error", "Delete project fail !");
+  }
+
+  yield put({
+    type: HIDE_LOADING,
+  });
+}
+
 export function* theoDoiCreateProjectSaga() {
   yield takeLatest("CREATE_PROJECT_SAGA", createProjectSaga);
 }
@@ -133,4 +160,8 @@ export function* theoDoiUpdateProjectSaga() {
 
 export function* theoDoiGetProjectDetail() {
   yield takeLatest("GET_PROJECT_DETAIL", getProjectDetailSaga);
+}
+
+export function* theoDoiDeleteProjectSaga() {
+  yield takeLatest("DELETE_PROJECT_SAGA", deleteProjectSaga);
 }

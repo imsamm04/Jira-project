@@ -1,23 +1,26 @@
 import React, { useState } from "react";
-import { Breadcrumb, Layout, MenuProps } from "antd";
-
+import { Layout, Menu } from "antd";
 import {
-  UploadOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
   UserOutlined,
   VideoCameraOutlined,
+  UploadOutlined,
   BarsOutlined,
-  PlusOutlined,
   SearchOutlined,
+  PlusOutlined,
 } from "@ant-design/icons";
 
-import { Menu } from "antd";
-import Sider from "antd/lib/layout/Sider";
+import { useDispatch, useSelector } from "react-redux";
+import FormCreateTask from "../Forms/FormCreateTask/FormCreateTask";
 
+const { Header, Sider, Content } = Layout;
 export default function SidebarCyberbugs() {
+  const dispatch = useDispatch();
+
   const [state, setState] = useState({
     collapsed: false,
   });
-
   const toggle = () => {
     setState({
       collapsed: !state.collapsed,
@@ -31,15 +34,24 @@ export default function SidebarCyberbugs() {
         collapsed={state.collapsed}
         style={{ height: "100%" }}
       >
-        <div className="text-right pr-2 mt-3" onClick={toggle}>
+        <div className="text-right pr-2" onClick={toggle}>
           <BarsOutlined
             style={{ cursor: "pointer", color: "#fff", fontSize: 25 }}
           />
         </div>
 
-        <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-          <Menu.Item key="1" icon={<PlusOutlined style={{ fontSize: 20 }} />}>
+          <Menu.Item
+            key="1"
+            icon={<PlusOutlined style={{ fontSize: 20 }} />}
+            onClick={() => {
+              dispatch({
+                type: "OPEN_FORM_CREATE_TASK",
+                Component: <FormCreateTask />,
+                title: "Create task",
+              });
+            }}
+          >
             <span className="mb-2">Create task</span>
           </Menu.Item>
           <Menu.Item key="2" icon={<SearchOutlined style={{ fontSize: 20 }} />}>
