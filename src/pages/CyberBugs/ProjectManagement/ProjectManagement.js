@@ -22,6 +22,8 @@ export default function ProjectManagement(props) {
   const [sortedInfo, setSortedInfo] = useState({});
   const dispatch = useDispatch();
 
+  const [value, setValue] = useState("");
+
   useEffect(() => {
     dispatch({ type: "GET_LIST_PROJECT_SAGA" });
   }, []);
@@ -103,23 +105,96 @@ export default function ProjectManagement(props) {
         return (
           <div>
             {record.members?.slice(0, 3).map((member, index) => {
-              return <Avatar key={index} src={member.avatar} />;
+              return (
+                <Popover
+                  key={index}
+                  placement="top"
+                  title={"Members List"}
+                  content={() => {
+                    return (
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th>Id</th>
+                            <th>avatar</th>
+                            <th>name</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {record.members?.map((item, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{item.userId}</td>
+                                <td>
+                                  <img
+                                    src={item.avatar}
+                                    width="30"
+                                    height="30"
+                                    style={{ borderRadius: "15px" }}
+                                  />
+                                </td>
+                                <td>{item.name}</td>
+                                <td>
+                                  <button
+                                    className="btn btn-danger"
+                                    style={{ borderRadius: "30px" }}
+                                    onClick={() => {
+                                      dispatch({
+                                        type: "REMOVE_USER_PROJECT_API",
+                                        userProject: {
+                                          userId: item.userId,
+                                          projectId: record.id,
+                                        },
+                                      });
+                                    }}
+                                  >
+                                    X
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    );
+                  }}
+                >
+                  <Avatar key={index} src={member.avatar} />
+                </Popover>
+              );
             })}
             {record.members?.length >= 3 ? <Avatar>...</Avatar> : <></>}
             <Popover
               placement="rightTop"
-              title={"add user"}
+              title={"Add user"}
               content={() => {
                 return (
                   <AutoComplete
                     options={userSearch?.map((user, index) => {
                       return {
                         label: user.name,
-                        value: user.userId,
+                        value: user.userId.toString(),
                       };
                     })}
                     style={{ width: 200 }}
                     // onSelect={onSelect}
+                    value={value}
+                    onSelect={(valueSelect, option) => {
+                      // set gia tri
+                      setValue(option.label);
+                      // call api create user
+                      dispatch({
+                        type: "ADD_USER_PROJECT_API",
+                        userProject: {
+                          projectId: record.id,
+                          userId: valueSelect,
+                        },
+                      });
+                    }}
+                    onChange={(text) => {
+                      setValue(text);
+                    }}
                     onSearch={(value) => {
                       dispatch({
                         type: "GET_USER_API",

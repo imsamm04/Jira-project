@@ -22,5 +22,7 @@ export function* rootSaga() {
     ProjectSaga.theoDoiGetListProjectSaga(),
     ProjectSaga.theoDoiUpdateProjectSaga(),
     Cyberbugs.theoDoiGetUser(),
+    Cyberbugs.theoDoiAddUserProject(),
+    Cyberbugs.theoDoiRemoveUserProject(),
   ]);
 }
