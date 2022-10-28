@@ -24,7 +24,6 @@ export default function ProjectManagement(props) {
     (state) => state.UserLoginCyberBugsReducer
   );
 
-  console.log("projectList", projectList);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
   const dispatch = useDispatch();
@@ -37,7 +36,6 @@ export default function ProjectManagement(props) {
   }, []);
 
   const handleChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };

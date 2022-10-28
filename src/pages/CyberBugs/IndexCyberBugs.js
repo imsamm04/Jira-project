@@ -8,7 +8,6 @@ import { useEffect } from "react";
 export default function IndexCyberBugs(props) {
   let { projectDetail } = useSelector((state) => state.ProjectReducer);
   const dispatch = useDispatch();
-  console.log("projectDetail", projectDetail);
   useEffect(() => {
     const projectId = props.match.params.projectId;
     dispatch({

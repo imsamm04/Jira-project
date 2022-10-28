@@ -118,7 +118,6 @@ const EditProjectForm = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
     const { projectEdit } = props;
-    console.log("projectEdit", projectEdit);
     //cap nhat du lieu cho formik from reducer
     return {
       id: projectEdit?.id,
@@ -130,7 +129,6 @@ const EditProjectForm = withFormik({
   validationSchema: Yup.object().shape({}),
   handleSubmit: (values, { props, setSubmitting }) => {
     //Khi người dùng bấm submit => đưa dữ liệu về backedn thông qua api
-    console.log("values", values);
     const action = {
       type: "UPDATE_PROJECT_SAGA",
       projectUpdate: values,

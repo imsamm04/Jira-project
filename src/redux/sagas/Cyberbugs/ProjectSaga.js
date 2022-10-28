@@ -28,11 +28,6 @@ function* createProjectSaga(action) {
       cyberbugsService.createProjectAuthorization(action.newProject)
     );
     if (status === STATUS_CODE.SUCCESS) {
-      // yield put({
-      console.log(data);
-      //   type: GET_ALL_PROJECT_CATEGORY,
-      //   data: data.content,
-      // });
       history.push("/projectmanagement");
     }
   } catch (error) {
@@ -55,7 +50,6 @@ function* getListProjectSaga(action) {
         type: "GET_LIST_PROJECT",
         projectList: data.content,
       });
-      console.log("DATA from api", data);
     }
   } catch (error) {
     console.log("error", error);
@@ -81,7 +75,6 @@ function* updateProjectSaga(action) {
       //   type: "GET_LIST_PROJECT",
       //   projectList: data.content,
       // });
-      console.log("DATA from api", data);
       yield put({
         type: "GET_LIST_PROJECT_SAGA",
       });

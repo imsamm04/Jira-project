@@ -25,7 +25,7 @@ function* signinSaga(action) {
     const { data, status } = yield call(() =>
       cyberbugsService.signinCyberBugs(action.userLogin)
     );
-    console.log("data", data);
+
     //Luu vao local storage
     localStorage.setItem(TOKEN, data.content.accessToken);
     localStorage.setItem(USER_LOGIN, JSON.stringify(data.content));
@@ -50,20 +50,16 @@ export function* theoDoiSign() {
 
 function* getUserSaga(action) {
   //action.keyWord
-  console.log("keyword", action.keyWord);
   //Gọi api
   try {
     const { data, status } = yield call(() =>
       userService.getUser(action.keyWord)
     );
 
-    console.log("data=>", data);
-
     yield put({
       type: "GET_USER_SEARCH",
       lstUserSearch: data.content,
     });
-    // console.log("data", data);
   } catch (err) {
     console.log(err.response.data);
   }
@@ -79,8 +75,6 @@ function* addUserProjectSaga(action) {
     const { data, status } = yield call(() =>
       userService.assignUserProject(action.userProject)
     );
-
-    console.log("data=>", data);
 
     yield put({
       type: "GET_LIST_PROJECT_SAGA",

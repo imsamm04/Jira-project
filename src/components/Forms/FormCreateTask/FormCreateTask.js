@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, connect } from "react-redux";
 import { Editor } from "@tinymce/tinymce-react";
 import { Select, Slider } from "antd";
 import { useEffect } from "react";
 import { GET_ALL_PROJECT_SAGA } from "../../../redux/constants/Cyberbugs/ProjectCyberBugsConstants";
 import { GET_ALL_TASK_TYPE_SAGA } from "../../../redux/constants/Cyberbugs/TaskTypeConstants";
 import { GET_ALL_PRIORITY_SAGA } from "../../../redux/constants/Cyberbugs/PriorityConstants";
+import { withFormik } from "formik";
+import * as Yup from "yup";
+import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusConstant";
 
 const { Option } = Select;
-
-export default function FormCreateTask() {
+function FormCreateTask(props) {
   const children = [];
   const handleEditorChange = (value, editor) => {};
   const [size, setSize] = useState("middle");
@@ -18,10 +20,21 @@ export default function FormCreateTask() {
   };
 
   const dispatch = useDispatch();
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    setValues,
+    setFieldValue,
+  } = props;
 
   const { arrProject } = useSelector((state) => state.ProjectCyberBugsReducer);
   const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
+  const { arrStatus } = useSelector((state) => state.StatusReducer);
   const { userSearch } = useSelector(
     (state) => state.UserLoginCyberBugsReducer
   );
@@ -35,10 +48,6 @@ export default function FormCreateTask() {
       <Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>
     );
   }
-  const handleChange = (value) => {
-    console.log(`Selected: ${value}`);
-  };
-
   const [timeTracking, setTimeTracking] = useState({
     timeTrackingSpent: 0,
     timeTrackingRemaining: 0,
@@ -53,13 +62,18 @@ export default function FormCreateTask() {
     });
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
     dispatch({ type: "GET_USER_API", keyWord: "" });
+    dispatch({ type: GET_ALL_STATUS_SAGA });
   }, []);
 
   return (
-    <div className="container">
+    <form className="container" onSubmit={handleSubmit}>
       <div className="form-group">
         <p>Project</p>
-        <select name="projectId" className="form-control">
+        <select
+          name="projectId"
+          className="form-control"
+          onChange={handleChange}
+        >
           {arrProject?.map((item, index) => {
             return (
               <option key={index} value={item.id}>
@@ -69,11 +83,41 @@ export default function FormCreateTask() {
           })}
         </select>
       </div>
+      <div className="row">
+        <div className="form-group col-6">
+          <p>Task name</p>
+          <input
+            name="taskName"
+            className="form-control"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="form-group col-6">
+          <p>Status</p>
+          <select
+            name="statusId"
+            className="form-control"
+            onChange={handleChange}
+          >
+            {arrStatus.map((statusItem, index) => {
+              return (
+                <option key={index} value={statusItem.statusId}>
+                  {statusItem.statusName}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+      </div>
       <div className="form-group">
         <div className="row">
           <div className="col-6">
             <p>Priority</p>
-            <select name="priorityId" className="form-control">
+            <select
+              name="priorityId"
+              className="form-control"
+              onChange={handleChange}
+            >
               {arrPriority.map((priority, index) => {
                 return (
                   <option key={index} value={priority.priorityId}>
@@ -83,11 +127,20 @@ export default function FormCreateTask() {
               })}
             </select>
           </div>
+
           <div className="col-6">
             <p>Task type</p>
-            <select className="form-control" name="typeId">
+            <select
+              className="form-control"
+              name="typeId"
+              onChange={handleChange}
+            >
               {arrTaskType?.map((item, index) => {
-                return <option key={index}>{item.taskType}</option>;
+                return (
+                  <option value={item.id} key={index}>
+                    {item.taskType}
+                  </option>
+                );
               })}
             </select>
           </div>
@@ -105,9 +158,7 @@ export default function FormCreateTask() {
               optionFilterProp="label"
               onChange={(values) => {
                 //set lại giá trị cho lstUserAsign
-              }}
-              onSelect={(value) => {
-                console.log(value);
+                setFieldValue("listUserAsign", values);
               }}
               style={{ width: "100%" }}
             >
@@ -117,6 +168,7 @@ export default function FormCreateTask() {
               <div className="col-12">
                 <p>Original Estimate</p>
                 <input
+                  onChange={handleChange}
                   className="form-control"
                   type="number"
                   min="0"
@@ -131,9 +183,9 @@ export default function FormCreateTask() {
 
             <Slider
               defaultValue={30}
-              tooltip={{
-                open: true,
-              }}
+              // tooltip={{
+              //   open: true,
+              // }}
               max={
                 Number(timeTracking.timeTrackingSpent) +
                 Number(timeTracking.timeTrackingRemaining)
@@ -162,6 +214,7 @@ export default function FormCreateTask() {
                       ...timeTracking,
                       timeTrackingSpent: e.target.value,
                     });
+                    setFieldValue("timeTrackingSpent", e.target.value);
                   }}
                 ></input>
               </div>
@@ -178,6 +231,7 @@ export default function FormCreateTask() {
                       ...timeTracking,
                       timeTrackingRemaining: e.target.value,
                     });
+                    setFieldValue("timeTrackingRemaining", e.target.value);
                   }}
                 ></input>
               </div>
@@ -203,9 +257,48 @@ export default function FormCreateTask() {
                             alignleft aligncenter alignright alignjustify | \
                             bullist numlist outdent indent | removeformat | help",
           }}
-          onEditorChange={handleEditorChange}
+          onEditorChange={(content, editor) => {
+            setFieldValue("description", content);
+          }}
         />
       </div>
-    </div>
+      <button type="submit">submit</button>
+    </form>
   );
 }
+
+const frmCreateTask = withFormik({
+  enableReinitialize: true,
+  mapPropsToValues: (props) => {
+    const { arrProject, arrTaskType, arrPriority, arrStatus } = props;
+    return {
+      taskName: "",
+      description: "",
+      statusId: arrStatus[0]?.statusId,
+      originalEstimate: 0,
+      timeTrackingSpent: 0,
+      timeTrackingRemaining: 0,
+      projectId: arrProject[0]?.id,
+      typeId: arrTaskType[0]?.id,
+      priorityId: arrPriority[0]?.priorityId,
+      listUserAsign: [],
+    };
+  },
+  validationSchema: Yup.object().shape({}),
+  handleSubmit: (values, { props, setSubmitting }) => {
+    props.dispatch({ type: "CREATE_TASK_SAGA", taskObject: values });
+    console.log("values", values);
+  },
+  displayName: "createTaskForm",
+})(FormCreateTask);
+
+const mapStateToProps = (state) => {
+  return {
+    arrProject: state.ProjectCyberBugsReducer.arrProject,
+    arrTaskType: state.TaskTypeReducer.arrTaskType,
+    arrPriority: state.PriorityReducer.arrPriority,
+    arrStatus: state.StatusReducer.arrStatus,
+  };
+};
+
+export default connect(mapStateToProps)(frmCreateTask);
