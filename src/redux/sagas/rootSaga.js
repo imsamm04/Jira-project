@@ -4,6 +4,9 @@ import * as ToDoListSaga from "./ToDoListSaga";
 import * as Cyberbugs from "./Cyberbugs/UserCyberbugsSaga";
 import * as ProjectCyberbugsSaga from "./Cyberbugs/ProjectCategorySaga";
 import * as ProjectSaga from "./Cyberbugs/ProjectSaga";
+import * as TaskTypeSaga from "./Cyberbugs/TaskTypeSaga";
+import * as PrioritySaga from "./Cyberbugs/PrioritySaga";
+
 export function* rootSaga() {
   yield all([
     //Nghiệp vụ theo dõi các action saga todolist
@@ -24,7 +27,10 @@ export function* rootSaga() {
     Cyberbugs.theoDoiGetUser(),
     Cyberbugs.theoDoiAddUserProject(),
     Cyberbugs.theoDoiRemoveUserProject(),
-    ProjectSaga.theoDoiGetProjectDetail(),
+    // ProjectSaga.theoDoiGetProjectDetail(),
     ProjectSaga.theoDoiDeleteProjectSaga(),
+    ProjectSaga.theoDoiGetAllProjectSaga(),
+    TaskTypeSaga.theoDoiGetAllTaskTypeSaga(),
+    PrioritySaga.theoDoiGetAllPriority(),
   ]);
 }

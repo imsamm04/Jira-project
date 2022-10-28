@@ -9,6 +9,10 @@ import {
   GET_ALL_PROJECT_CATEGORY,
   GET_ALL_PROJECT_CATEGORY_SAGA,
 } from "../../constants/Cyberbugs/Cyberbugs";
+import {
+  GET_ALL_PROJECT,
+  GET_ALL_PROJECT_SAGA,
+} from "../../constants/Cyberbugs/ProjectCyberBugsConstants";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../../constants/LoadingConst";
 import { GET_TASKLIST_API } from "../../constants/ToDoListConst";
 
@@ -95,24 +99,23 @@ function* updateProjectSaga(action) {
   });
 }
 
-function* getProjectDetailSaga(action) {
+function* getProjectAllSaga(action) {
   //SHOW LOADING
   yield put({
     type: DISPLAY_LOADING,
   });
   yield delay(500);
   try {
-    const { data, status } = yield call(() =>
-      projectService.getProjectDetail(action.projectId)
-    );
+    const { data, status } = yield call(() => projectService.getAllProject());
     if (status === STATUS_CODE.SUCCESS) {
       yield put({
-        type: "PUT_PROJECT_DETAIL",
-        projectDetail: data.content,
+        type: GET_ALL_PROJECT,
+        arrProject: data.content,
       });
     }
   } catch (error) {
-    console.log("error", error);
+    console.log("404 not found");
+    history.push("/projectmanagement");
   }
 
   yield put({
@@ -158,8 +161,8 @@ export function* theoDoiUpdateProjectSaga() {
   yield takeLatest("UPDATE_PROJECT_SAGA", updateProjectSaga);
 }
 
-export function* theoDoiGetProjectDetail() {
-  yield takeLatest("GET_PROJECT_DETAIL", getProjectDetailSaga);
+export function* theoDoiGetAllProjectSaga() {
+  yield takeLatest(GET_ALL_PROJECT_SAGA, getProjectAllSaga);
 }
 
 export function* theoDoiDeleteProjectSaga() {
