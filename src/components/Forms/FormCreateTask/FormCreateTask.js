@@ -22,7 +22,14 @@ export default function FormCreateTask() {
   const { arrProject } = useSelector((state) => state.ProjectCyberBugsReducer);
   const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
-  console.log("arrTaskType", arrTaskType);
+  const { userSearch } = useSelector(
+    (state) => state.UserLoginCyberBugsReducer
+  );
+
+  const userOptions = userSearch.map((item, index) => {
+    return { value: item.userId, label: item.name };
+  });
+
   for (let i = 10; i < 36; i++) {
     children.push(
       <Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>
@@ -45,6 +52,7 @@ export default function FormCreateTask() {
       type: GET_ALL_TASK_TYPE_SAGA,
     });
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
+    dispatch({ type: "GET_USER_API", keyWord: "" });
   }, []);
 
   return (
@@ -90,14 +98,18 @@ export default function FormCreateTask() {
           <div className="col-6">
             <p>Assignees</p>
             <Select
-              mode="tags"
+              mode="multiple"
               size={size}
+              options={userOptions}
               placeholder="Please select"
-              defaultValue={["a10", "c12"]}
-              onChange={handleChange}
-              style={{
-                width: "100%",
+              optionFilterProp="label"
+              onChange={(values) => {
+                //set lại giá trị cho lstUserAsign
               }}
+              onSelect={(value) => {
+                console.log(value);
+              }}
+              style={{ width: "100%" }}
             >
               {children}
             </Select>
