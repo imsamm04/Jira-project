@@ -274,6 +274,7 @@ export default function ProjectManagement(props) {
                 const action = {
                   type: "OPEN_FORM_EDIT_PROJECT",
                   Component: <FormEditProject />,
+                  title: "Edit project",
                 };
                 dispatch(action);
                 const actionEditProject = {

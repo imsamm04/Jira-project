@@ -44,7 +44,7 @@ export default function DrawerCyberBugs(props) {
         New account
       </Button> */}
       <Drawer
-        title="Create a new account"
+        title={title}
         width={720}
         onClose={onClose}
         visible={visible}
