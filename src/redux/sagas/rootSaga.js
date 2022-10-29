@@ -29,7 +29,7 @@ export function* rootSaga() {
     Cyberbugs.theoDoiGetUser(),
     Cyberbugs.theoDoiAddUserProject(),
     Cyberbugs.theoDoiRemoveUserProject(),
-    // ProjectSaga.theoDoiGetProjectDetail(),
+    ProjectSaga.theoDoiGetProjectDetail(),
     ProjectSaga.theoDoiDeleteProjectSaga(),
     ProjectSaga.theoDoiGetAllProjectSaga(),
     TaskTypeSaga.theoDoiGetAllTaskTypeSaga(),

@@ -8,7 +8,7 @@ import About from "./pages/About/About";
 import BaiTapToDoListSaga from "./pages/BaiTapToDoListSaga/BaiTapToDoListSaga";
 import Contact from "./pages/Contact/Contact";
 import CreateProject from "./pages/CyberBugs/CreateProject/CreateProject";
-import IndexCyberBugs from "./pages/CyberBugs/IndexCyberBugs";
+import IndexCyberBugs from "./pages/CyberBugs/ProjectDetail/IndexCyberBugs";
 import LoginCyberBugs from "./pages/CyberBugs/LoginCyberBugs/LoginCyberBugs";
 import ProjectManagement from "./pages/CyberBugs/ProjectManagement/ProjectManagement";
 import Demo from "./pages/Demo/Demo";
