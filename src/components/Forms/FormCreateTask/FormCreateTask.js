@@ -63,6 +63,10 @@ function FormCreateTask(props) {
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
     dispatch({ type: "GET_USER_API", keyWord: "" });
     dispatch({ type: GET_ALL_STATUS_SAGA });
+    dispatch({
+      type: "SET_SUBMIT_CREATE_TASK",
+      submitFunction: handleSubmit,
+    });
   }, []);
 
   return (
@@ -262,7 +266,7 @@ function FormCreateTask(props) {
           }}
         />
       </div>
-      <button type="submit">submit</button>
+      {/* <button type="submit">submit</button> */}
     </form>
   );
 }

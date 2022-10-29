@@ -25,6 +25,12 @@ export const drawerReducer = (state = initialState, action) => {
     case "SET_SUBMIT_EDIT_PROJECT":
       state.callBackSubmit = action.submitFunction;
       return { ...state };
+
+    case "SET_SUBMIT_CREATE_TASK":
+      state.callBackSubmit = action.submitFunction;
+      state.visible = true;
+      return { ...state };
+
     case "OPEN_FORM_CREATE_TASK": {
       state.visible = true;
       state.title = action.title;
