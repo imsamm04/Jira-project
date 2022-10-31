@@ -68,7 +68,7 @@ export function* theoDoiGetTaskDetailSaga(action) {
 
 function* updateTaskStatusSaga(action) {
   const { taskUpdateStatus } = action;
-  console.log(action);
+  console.log("taskUpdateStatus", taskUpdateStatus);
   try {
     //Cập nhật api status cho task hiện tại (Task đang mở modal)
     const { data, status } = yield call(() =>
