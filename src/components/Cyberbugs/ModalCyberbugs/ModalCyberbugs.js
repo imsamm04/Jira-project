@@ -1,28 +1,121 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactHtmlParser from "react-html-parser";
 import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusConstant";
 import { GET_ALL_PRIORITY_SAGA } from "../../../redux/constants/Cyberbugs/PriorityConstants";
 import {
   CHANGE_TASK_MODAL,
+  HANDLE_CHANGE_POST_API_SAGA,
   UPDATE_STATUS_TASK_SAGA,
 } from "../../../redux/constants/Cyberbugs/TaskConstants";
 import { GET_ALL_TASK_TYPE_SAGA } from "../../../redux/constants/Cyberbugs/TaskTypeConstants";
+import { Editor } from "@tinymce/tinymce-react";
+
 export default function ModalCyberbugs(props) {
   const { taskDetailModal } = useSelector((state) => state.TaskReducer);
-
   const { arrStatus } = useSelector((state) => state.StatusReducer);
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
   const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
+  const { projectDetail } = useSelector((state) => state.ProjectReducer);
+  const [historyContent, setHistoryContent] = useState(
+    taskDetailModal.description
+  );
+  const [content, setContent] = useState(taskDetailModal.description);
+  const [visibleEditor, setVisibleEditor] = useState(false);
   const dispatch = useDispatch();
+  console.log("projectDetail->", projectDetail);
 
   const renderDescription = () => {
     const jsxDescription = ReactHtmlParser(taskDetailModal.description);
-    return jsxDescription;
+    return (
+      <div>
+        {visibleEditor ? (
+          <div>
+            <Editor
+              name="description"
+              initialValue={taskDetailModal.description}
+              init={{
+                selector: "textarea#myTextArea",
+                height: 500,
+                menubar: false,
+                plugins: [
+                  "advlist autolink lists link image charmap print preview anchor",
+                  "searchreplace visualblocks code fullscreen",
+                  "insertdatetime media table paste code help wordcount",
+                ],
+                toolbar:
+                  "undo redo | formatselect | bold italic backcolor | \
+                  alignleft aligncenter alignright alignjustify | \
+                  bullist numlist outdent indent | removeformat | help",
+              }}
+              onEditorChange={(content, editor) => {
+                setContent(content);
+              }}
+            />
+            {/* <button
+              className="btn btn-primary m-2"
+              onClick={() => {
+                dispatch({
+                  type: CHANGE_TASK_MODAL,
+                  name: "description",
+                  value: content,
+                });
+                setvisibleEditor(false);
+              }}
+            >
+              Save
+            </button> */}
+            <button
+              className="btn btn-primary m-2"
+              onClick={() => {
+                dispatch({
+                  type: HANDLE_CHANGE_POST_API_SAGA,
+                  actionType: CHANGE_TASK_MODAL,
+                  name: "description",
+                  value: content,
+                });
+                setVisibleEditor(false);
+              }}
+            >
+              Save
+            </button>
+            <button
+              className="btn btn-primary m-2"
+              onClick={() => {
+                dispatch({
+                  type: CHANGE_TASK_MODAL,
+                  name: "description",
+                  // value: historyContent,
+                });
+
+                setVisibleEditor(false);
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        ) : (
+          <div
+            onClick={() => {
+              setHistoryContent(taskDetailModal.description);
+              setVisibleEditor(!visibleEditor);
+            }}
+          >
+            {jsxDescription}
+          </div>
+        )}
+      </div>
+    );
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // dispatch({
+    //   type: HANDLE_CHANGE_POST_API_SAGA,
+    //   actionType: CHANGE_TASK_MODAL,
+    //   name,
+    //   value,
+    // });
     dispatch({
       type: CHANGE_TASK_MODAL,
       name,
@@ -81,7 +174,6 @@ export default function ModalCyberbugs(props) {
       </div>
     );
   };
-  console.log("arrPriority", arrPriority);
   useEffect(() => {
     dispatch({ type: GET_ALL_STATUS_SAGA });
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
@@ -133,6 +225,9 @@ export default function ModalCyberbugs(props) {
                 className="close"
                 data-dismiss="modal"
                 aria-label="Close"
+                // onClick={() => {
+                //   setVisibleEditor(false);
+                // }}
               >
                 <span aria-hidden="true">×</span>
               </button>
@@ -145,7 +240,7 @@ export default function ModalCyberbugs(props) {
                   <p className="issue">This is an issue of type: Task.</p>
                   <div className="description">
                     <p>Description</p>
-                    {renderDescription}
+                    {renderDescription()}
                   </div>
                   <div style={{ fontWeight: 500, marginBottom: 10 }}>
                     Jira Software (software projects) issue types:
@@ -272,20 +367,26 @@ export default function ModalCyberbugs(props) {
                   </div>
                   <div className="assignees">
                     <h6>ASSIGNEES</h6>
-                    <div style={{ display: "flex" }}>
+                    <div className="row">
                       {taskDetailModal.assigness.map((user, index) => {
                         return (
-                          <div style={{ display: "flex" }} className="item">
-                            <div className="avatar">
-                              <img src={user.avatar} alt={user.avatar} />
+                          <div className="col-6 mt-2">
+                            <div
+                              key={index}
+                              style={{ display: "flex" }}
+                              className="item"
+                            >
+                              <div className="avatar">
+                                <img src={user.avatar} alt={user.avatar} />
+                              </div>
+                              <p className="name">
+                                {user.name}
+                                <i
+                                  className="fa fa-times"
+                                  style={{ marginLeft: 5 }}
+                                />
+                              </p>
                             </div>
-                            <p className="name">
-                              {user.name}
-                              <i
-                                className="fa fa-times"
-                                style={{ marginLeft: 5 }}
-                              />
-                            </p>
                           </div>
                         );
                       })}
