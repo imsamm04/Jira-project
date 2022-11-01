@@ -1,6 +1,8 @@
 import {
+  CHANGE_ASSIGNESS,
   CHANGE_TASK_MODAL,
   GET_TASK_DETAIL,
+  REMOVE_USER_ASSIGN,
 } from "../constants/Cyberbugs/TaskConstants";
 
 const initialState = {
@@ -14,18 +16,18 @@ const initialState = {
       taskType: "bug",
     },
     assigness: [
-      {
-        id: 68,
-        avatar: "https://ui-avatars.com/api/?name=khải",
-        name: "khải",
-        alias: "khai",
-      },
-      {
-        id: 69,
-        avatar: "https://ui-avatars.com/api/?name=thoa",
-        name: "thoa",
-        alias: "thoa",
-      },
+      // {
+      //   id: 68,
+      //   avatar: "https://ui-avatars.com/api/?name=khải",
+      //   name: "khải",
+      //   alias: "khai",
+      // },
+      // {
+      //   id: 69,
+      //   avatar: "https://ui-avatars.com/api/?name=thoa",
+      //   name: "thoa",
+      //   alias: "thoa",
+      // },
     ],
     lstComment: [],
     taskId: 54,
@@ -56,6 +58,21 @@ export const TaskReducer = (state = initialState, action) => {
         ...state,
         taskDetailModal: { ...state.taskDetailModal, [name]: value },
       };
+    }
+    case CHANGE_ASSIGNESS: {
+      state.taskDetailModal.assigness = [
+        ...state.taskDetailModal.assigness,
+        action.userSelected,
+      ];
+      return { ...state };
+    }
+    case REMOVE_USER_ASSIGN: {
+      state.taskDetailModal.assigness = [
+        ...state.taskDetailModal.assigness.filter(
+          (us) => us.id !== action.userId
+        ),
+      ];
+      return { ...state };
     }
     default:
       return state;

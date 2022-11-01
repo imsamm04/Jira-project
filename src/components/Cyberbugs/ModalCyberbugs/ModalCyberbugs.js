@@ -4,12 +4,15 @@ import ReactHtmlParser from "react-html-parser";
 import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusConstant";
 import { GET_ALL_PRIORITY_SAGA } from "../../../redux/constants/Cyberbugs/PriorityConstants";
 import {
+  CHANGE_ASSIGNESS,
   CHANGE_TASK_MODAL,
   HANDLE_CHANGE_POST_API_SAGA,
   UPDATE_STATUS_TASK_SAGA,
 } from "../../../redux/constants/Cyberbugs/TaskConstants";
 import { GET_ALL_TASK_TYPE_SAGA } from "../../../redux/constants/Cyberbugs/TaskTypeConstants";
 import { Editor } from "@tinymce/tinymce-react";
+import { Select } from "antd";
+const { Option } = Select;
 
 export default function ModalCyberbugs(props) {
   const { taskDetailModal } = useSelector((state) => state.TaskReducer);
@@ -24,6 +27,8 @@ export default function ModalCyberbugs(props) {
   const [visibleEditor, setVisibleEditor] = useState(false);
   const dispatch = useDispatch();
   console.log("projectDetail->", projectDetail);
+  console.log("taskDetailModal->", taskDetailModal);
+  // const { Option } = Select;
 
   const renderDescription = () => {
     const jsxDescription = ReactHtmlParser(taskDetailModal.description);
@@ -383,20 +388,116 @@ export default function ModalCyberbugs(props) {
                                 {user.name}
                                 <i
                                   className="fa fa-times"
-                                  style={{ marginLeft: 5 }}
+                                  style={{ marginLeft: 5, cursor: "pointer" }}
+                                  onClick={() => {
+                                    dispatch({
+                                      type: "REMOVE_USER_ASSIGN",
+                                      userId: user.id,
+                                    });
+                                  }}
                                 />
                               </p>
                             </div>
                           </div>
                         );
                       })}
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <i className="fa fa-plus" style={{ marginRight: 5 }} />
-                        <span>Add more</span>
+                      <div
+                        className="col-6  mt-2 mb-3"
+                        style={{ display: "flex", alignItems: "center" }}
+                      >
+                        {/* <select
+                          name="lstUser"
+                          className="form-control"
+                          onChange={(e) => {
+                            let { name, value } = e.target;
+                            if (value == 0) {
+                              return;
+                            }
+                            let userSelected = projectDetail.members.find(
+                              (mem) => mem.userId == value
+                            );
+
+                            userSelected = {
+                              ...userSelected,
+                              id: userSelected.userId,
+                            };
+                            dispatch({
+                              type: CHANGE_ASSIGNESS,
+                              userSelected: userSelected,
+                            });
+                            console.log("userSelected----", userSelected);
+                          }}
+                        >
+                          <option value={0} selected>
+                            Select user assign
+                          </option>
+                          {projectDetail.members
+                            ?.filter((mem) => {
+                              let index = taskDetailModal.assigness?.findIndex(
+                                (us) => us.id === mem.userId
+                              );
+                              if (index != -1) {
+                                return false;
+                              }
+                              return true;
+                            })
+                            .map((mem, index) => {
+                              return (
+                                <option key={index} value={mem.userId}>
+                                  {mem.name}
+                                </option>
+                              );
+                            })}
+                        </select> */}
+                        <Select
+                          className="form-control"
+                          name="lstUser"
+                          showSearch
+                          style={{ width: 200 }}
+                          placeholder="Search to Select"
+                          optionFilterProp="label"
+                          value="+ Add more"
+                          onSelect={(value) => {
+                            if (value == 0) {
+                              return;
+                            }
+                            let userSelected = projectDetail.members.find(
+                              (mem) => mem.userId == value
+                            );
+
+                            userSelected = {
+                              ...userSelected,
+                              id: userSelected.userId,
+                            };
+                            dispatch({
+                              type: CHANGE_ASSIGNESS,
+                              userSelected: userSelected,
+                            });
+                            console.log("userSelected----", userSelected);
+                          }}
+                        >
+                          {projectDetail.members
+                            ?.filter((mem) => {
+                              let index = taskDetailModal.assigness?.findIndex(
+                                (us) => us.id === mem.userId
+                              );
+                              if (index != -1) {
+                                return false;
+                              }
+                              return true;
+                            })
+                            .map((mem, index) => {
+                              return (
+                                <option key={index} value={mem.userId}>
+                                  {mem.name}
+                                </option>
+                              );
+                            })}
+                        </Select>
                       </div>
                     </div>
                   </div>
-                  <div className="reporter">
+                  <div className="reporter mt-4">
                     <h6>REPORTER</h6>
                     <div style={{ display: "flex" }} className="item">
                       <div className="avatar">
