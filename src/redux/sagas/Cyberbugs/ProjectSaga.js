@@ -156,7 +156,6 @@ function* getProjectDetailSaga(action) {
       projectService.getProjectDetail(action.projectId)
     );
 
-    console.log("data", data);
     //Lấy dữ liệu thành công thì đưa dữ liệu lên redux
     yield put({
       type: "PUT_PROJECT_DETAIL",

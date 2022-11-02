@@ -9,6 +9,7 @@
     "@tinymce/tinymce-react": "^3.8.1",
     "antd": "^4.23.6",
     "axios": "^0.20.0",
+    "dayjs": "^1.11.6",
     "formik": "^2.2.1",
     "history": "^4.10.0",
     "lite-server": "^2.5.4",

@@ -1,6 +1,7 @@
 import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useDispatch } from "react-redux";
+import { GET_ALL_USER_COMMENT_SAGA } from "../../../redux/constants/Cyberbugs/Comment";
 import {
   GET_TASK_DETAIL_SAGA,
   UPDATE_STATUS_TASK_SAGA,
@@ -80,6 +81,10 @@ export default function ContentMain(props) {
                                   onClick={() => {
                                     dispatch({
                                       type: GET_TASK_DETAIL_SAGA,
+                                      taskId: task.taskId,
+                                    });
+                                    dispatch({
+                                      type: GET_ALL_USER_COMMENT_SAGA,
                                       taskId: task.taskId,
                                     });
                                   }}

@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactHtmlParser from "react-html-parser";
+
 import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusConstant";
 import { GET_ALL_PRIORITY_SAGA } from "../../../redux/constants/Cyberbugs/PriorityConstants";
+
 import {
   CHANGE_ASSIGNESS,
   CHANGE_TASK_MODAL,
@@ -12,6 +14,10 @@ import {
 import { GET_ALL_TASK_TYPE_SAGA } from "../../../redux/constants/Cyberbugs/TaskTypeConstants";
 import { Editor } from "@tinymce/tinymce-react";
 import { Select } from "antd";
+import {
+  GET_ALL_USER_COMMENT,
+  GET_ALL_USER_COMMENT_SAGA,
+} from "../../../redux/constants/Cyberbugs/Comment";
 const { Option } = Select;
 
 export default function ModalCyberbugs(props) {
@@ -20,15 +26,20 @@ export default function ModalCyberbugs(props) {
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
   const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
   const { projectDetail } = useSelector((state) => state.ProjectReducer);
+  const { arrComment } = useSelector((state) => state.CommentReducer);
+
+  // const { projectDetail } = useSelector((state) => state.ProjectReducer);
+
+  console.log("arrComment", arrComment);
+
   const [historyContent, setHistoryContent] = useState(
     taskDetailModal.description
   );
   const [content, setContent] = useState(taskDetailModal.description);
   const [visibleEditor, setVisibleEditor] = useState(false);
   const dispatch = useDispatch();
-  console.log("projectDetail->", projectDetail);
-  console.log("taskDetailModal->", taskDetailModal);
   // const { Option } = Select;
+  const dayjs = require("dayjs");
 
   const renderDescription = () => {
     const jsxDescription = ReactHtmlParser(taskDetailModal.description);
@@ -190,6 +201,10 @@ export default function ModalCyberbugs(props) {
     dispatch({ type: GET_ALL_STATUS_SAGA });
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
     dispatch({ type: GET_ALL_TASK_TYPE_SAGA });
+    // dispatch({
+    //   type: GET_ALL_USER_COMMENT_SAGA,
+    //   taskId: taskDetailModal.taskId,
+    // });
   }, []);
   return (
     <div
@@ -285,6 +300,45 @@ export default function ModalCyberbugs(props) {
                   </div>
                   <div className="comment">
                     <h6>Comment</h6>
+                    {arrComment.map((comment, index) => {
+                      return (
+                        <div key={index} className="lastest-comment">
+                          <div className="comment-item">
+                            <div
+                              className="display-comment"
+                              style={{ display: "flex" }}
+                            >
+                              <div className="avatar">
+                                <img src={comment.user.avatar} alt="true" />
+                              </div>
+                              <div>
+                                <p
+                                  style={{
+                                    marginBottom: 5,
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  {comment.user.name}{" "}
+                                  <span>
+                                    {dayjs("2019-01-25").format("DD/MM/YYYY")}
+                                  </span>
+                                </p>
+                                <p style={{ marginBottom: 5 }}>
+                                  {comment.contentComment}
+                                </p>
+                                <div>
+                                  <span style={{ color: "#929398" }}>Edit</span>
+                                  •
+                                  <span style={{ color: "#929398" }}>
+                                    Delete
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                     <div className="block-comment" style={{ display: "flex" }}>
                       <div className="avatar">
                         <img
@@ -310,36 +364,6 @@ export default function ModalCyberbugs(props) {
                             to comment
                           </span>
                         </p>
-                      </div>
-                    </div>
-                    <div className="lastest-comment">
-                      <div className="comment-item">
-                        <div
-                          className="display-comment"
-                          style={{ display: "flex" }}
-                        >
-                          <div className="avatar">
-                            <img
-                              src={require("../../../assets/img/download (1).jfif")}
-                              alt="true"
-                            />
-                          </div>
-                          <div>
-                            <p style={{ marginBottom: 5 }}>
-                              Lord Gaben <span>a month ago</span>
-                            </p>
-                            <p style={{ marginBottom: 5 }}>
-                              Lorem ipsum dolor sit amet, consectetur
-                              adipisicing elit. Repellendus tempora ex
-                              voluptatum saepe ab officiis alias totam ad
-                              accusamus molestiae?
-                            </p>
-                            <div>
-                              <span style={{ color: "#929398" }}>Edit</span>•
-                              <span style={{ color: "#929398" }}>Delete</span>
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </div>
