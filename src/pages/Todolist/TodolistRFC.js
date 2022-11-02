@@ -62,7 +62,8 @@ export default function TodolistRFC(props) {
 
   const addTask = (e) => {
     e.preventDefault(); //Dừng sự kiện submit form
-    console.log(state.values.taskName);
+    console.log("-------", state.values.taskName);
+    debugger;
 
     let promise = Axios({
       url: "http://svcy.myclass.vn/api/ToDoList/AddTask",

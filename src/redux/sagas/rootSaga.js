@@ -41,5 +41,7 @@ export function* rootSaga() {
     TaskSaga.theoDoiUpdateTaskStatusSaga(),
     TaskSaga.theoDoiHandleChangePostApi(),
     CommentSaga.theoDoiGetAllComment(),
+    CommentSaga.theoDoiCreateComment(),
+    CommentSaga.theoDoiDeleteComment(),
   ]);
 }

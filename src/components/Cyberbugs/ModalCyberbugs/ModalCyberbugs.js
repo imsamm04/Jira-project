@@ -13,11 +13,14 @@ import {
 } from "../../../redux/constants/Cyberbugs/TaskConstants";
 import { GET_ALL_TASK_TYPE_SAGA } from "../../../redux/constants/Cyberbugs/TaskTypeConstants";
 import { Editor } from "@tinymce/tinymce-react";
-import { Select } from "antd";
+import { Button, Input, message, Popconfirm, Select } from "antd";
 import {
+  CREATE_USER_COMMENT,
+  DELETE_USER_COMMENT,
   GET_ALL_USER_COMMENT,
   GET_ALL_USER_COMMENT_SAGA,
 } from "../../../redux/constants/Cyberbugs/Comment";
+import { DELETE_TASK_API } from "../../../redux/constants/ToDoListConst";
 const { Option } = Select;
 
 export default function ModalCyberbugs(props) {
@@ -40,6 +43,39 @@ export default function ModalCyberbugs(props) {
   const dispatch = useDispatch();
   // const { Option } = Select;
   const dayjs = require("dayjs");
+
+  // let [state, setState] = useState({
+  //   taskId: "",
+  //   contentComment: "",
+  // });
+
+  const [name, setName] = useState("");
+
+  const addComment = (e) => {
+    e.preventDefault();
+    // const contentComment = state;
+    dispatch({
+      type: CREATE_USER_COMMENT,
+      commentValue: {
+        contentComment: name,
+        taskId: taskDetailModal.taskId,
+      },
+    });
+    setName("");
+    // alert(`The name you entered was: ${name}`);
+  };
+
+  const confirm = (e) => {
+    // dispatch({
+    //   type: DELETE_USER_COMMENT,
+    //   id: comment.id,
+    // });
+    message.success("Click on Yes");
+  };
+  const cancel = (e) => {
+    console.log(e);
+    message.error("Click on No");
+  };
 
   const renderDescription = () => {
     const jsxDescription = ReactHtmlParser(taskDetailModal.description);
@@ -206,6 +242,7 @@ export default function ModalCyberbugs(props) {
     //   taskId: taskDetailModal.taskId,
     // });
   }, []);
+
   return (
     <div
       className="modal fade"
@@ -329,9 +366,35 @@ export default function ModalCyberbugs(props) {
                                 <div>
                                   <span style={{ color: "#929398" }}>Edit</span>
                                   •
-                                  <span style={{ color: "#929398" }}>
+                                  {/* <span
+                                    style={{
+                                      color: "#929398",
+                                      cursor: "pointer",
+                                    }}
+                                    onClick={() => {
+                                      dispatch({
+                                        type: DELETE_USER_COMMENT,
+                                        id: comment.id,
+                                      });
+                                    }}
+                                  >
                                     Delete
-                                  </span>
+                                  </span> */}
+                                  <Popconfirm
+                                    title="Are you sure to delete this task?"
+                                    onConfirm={confirm}
+                                    onCancel={cancel}
+                                    okText="Yes"
+                                    cancelText="No"
+                                    onClick={() => {
+                                      dispatch({
+                                        type: DELETE_USER_COMMENT,
+                                        id: comment.id,
+                                      });
+                                    }}
+                                  >
+                                    <a href="#">Delete</a>
+                                  </Popconfirm>
                                 </div>
                               </div>
                             </div>
@@ -346,8 +409,18 @@ export default function ModalCyberbugs(props) {
                           alt="true"
                         />
                       </div>
-                      <div className="input-comment">
-                        <input type="text" placeholder="Add a comment ..." />
+                      <div className="mt-2 input-comment">
+                        <form onSubmit={addComment}>
+                          <Input
+                            name="contentComment"
+                            placeholder="Basic usage"
+                            onChange={(e) => setName(e.target.value)}
+                            value={name}
+                          />
+                          <Button htmlType="submit" className="mt-3">
+                            Submit Comment
+                          </Button>
+                        </form>
                         <p>
                           <span style={{ fontWeight: 500, color: "gray" }}>
                             Protip:
