@@ -147,8 +147,8 @@ function* getProjectDetailSaga(action) {
   // return;
   //HIỂN THỊ LOADING
   // yield put({
-  //     type: DISPLAY_LOADING
-  // })
+  //   type: DISPLAY_LOADING,
+  // });
   yield delay(500);
 
   try {
@@ -167,8 +167,8 @@ function* getProjectDetailSaga(action) {
   }
 
   // yield put({
-  //     type: HIDE_LOADING
-  // })
+  //   type: HIDE_LOADING,
+  // });
 }
 
 export function* theoDoiGetProjectDetail() {

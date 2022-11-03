@@ -1,8 +1,9 @@
-import { call, put, select, takeLatest } from "redux-saga/effects";
+import { call, delay, put, select, takeLatest } from "redux-saga/effects";
 import { taskService } from "../../../services/TaskService";
 import { STATUS_CODE } from "../../../util/constants/settingSystem";
 import { notifiFunction } from "../../../util/Notification/notificationCyberbugs";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../../constants/LoadingConst";
+import { history } from "../../../util/history";
 import {
   HANDLE_CHANGE_POST_API_SAGA,
   GET_TASK_DETAIL_SAGA,
@@ -12,7 +13,10 @@ import {
   CHANGE_TASK_MODAL,
   CHANGE_ASSIGNESS,
   REMOVE_USER_ASSIGN,
+  DELETE_TASK_SAGA,
 } from "../../constants/Cyberbugs/TaskConstants";
+import { projectService } from "../../../services/ProjectService";
+
 function* createTaskSaga(action) {
   try {
     yield put({
@@ -24,11 +28,12 @@ function* createTaskSaga(action) {
 
     //Gọi api thành công thì dispatch lên reducer thông qua put
     if (status === STATUS_CODE.SUCCESS) {
-      console.log(data);
+      console.log("refesh here");
     }
     yield put({
       type: "CLOSE_DRAWER",
     });
+
     notifiFunction("success", "Create task successfully !");
   } catch (err) {
     console.log(err.response.data);
@@ -172,4 +177,26 @@ export function* handelChangePostApi(action) {
 
 export function* theoDoiHandleChangePostApi() {
   yield takeLatest(HANDLE_CHANGE_POST_API_SAGA, handelChangePostApi);
+}
+
+//delete task
+
+function* deleteTaskSaga(action) {
+  debugger;
+  try {
+    const { status } = yield call(() => taskService.deleteTask(action.taskId));
+    if (status === STATUS_CODE.SUCCESS) {
+      // history.push("/projectmanagement");
+      yield put({
+        type: "GET_PROJECT_DETAIL",
+        projectId: action.projectId,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export function* theoDoiDeleteTaskSaga() {
+  yield takeLatest(DELETE_TASK_SAGA, deleteTaskSaga);
 }

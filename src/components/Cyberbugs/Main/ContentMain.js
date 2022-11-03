@@ -6,6 +6,7 @@ import {
   GET_TASK_DETAIL_SAGA,
   UPDATE_STATUS_TASK_SAGA,
 } from "../../../redux/constants/Cyberbugs/TaskConstants";
+import ModalCyberbugs from "../ModalCyberbugs/ModalCyberbugs";
 export default function ContentMain(props) {
   const { projectDetail } = props;
   const dispatch = useDispatch();

@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactHtmlParser from "react-html-parser";
-
+import Icon, { ExclamationCircleOutlined } from "@ant-design/icons";
 import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusConstant";
 import { GET_ALL_PRIORITY_SAGA } from "../../../redux/constants/Cyberbugs/PriorityConstants";
 
 import {
   CHANGE_ASSIGNESS,
   CHANGE_TASK_MODAL,
+  DELETE_TASK_SAGA,
   HANDLE_CHANGE_POST_API_SAGA,
   UPDATE_STATUS_TASK_SAGA,
 } from "../../../redux/constants/Cyberbugs/TaskConstants";
 import { GET_ALL_TASK_TYPE_SAGA } from "../../../redux/constants/Cyberbugs/TaskTypeConstants";
 import { Editor } from "@tinymce/tinymce-react";
-import { Button, Input, message, Popconfirm, Select } from "antd";
+import { Button, Input, message, Modal, Popconfirm, Select } from "antd";
 import {
   CREATE_USER_COMMENT,
   DELETE_USER_COMMENT,
@@ -31,23 +32,31 @@ export default function ModalCyberbugs(props) {
   const { projectDetail } = useSelector((state) => state.ProjectReducer);
   const { arrComment } = useSelector((state) => state.CommentReducer);
 
-  // const { projectDetail } = useSelector((state) => state.ProjectReducer);
-
-  console.log("arrComment", arrComment);
-
   const [historyContent, setHistoryContent] = useState(
     taskDetailModal.description
   );
   const [content, setContent] = useState(taskDetailModal.description);
   const [visibleEditor, setVisibleEditor] = useState(false);
+
+  const [openModal, setOpenModal] = useState("modal");
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState(
+    "Are you sure want to delete this task?"
+  );
+
+  const confirm = () =>
+    new Promise((resolve) => {
+      dispatch({
+        type: DELETE_TASK_SAGA,
+        taskId: taskDetailModal.taskId,
+      });
+      setOpenModal("modalOff");
+      setTimeout(() => resolve(null), 3000);
+    });
+
   const dispatch = useDispatch();
   // const { Option } = Select;
   const dayjs = require("dayjs");
-
-  // let [state, setState] = useState({
-  //   taskId: "",
-  //   contentComment: "",
-  // });
 
   const [name, setName] = useState("");
 
@@ -65,13 +74,13 @@ export default function ModalCyberbugs(props) {
     // alert(`The name you entered was: ${name}`);
   };
 
-  const confirm = (e) => {
-    // dispatch({
-    //   type: DELETE_USER_COMMENT,
-    //   id: comment.id,
-    // });
-    message.success("Click on Yes");
-  };
+  // const confirm = (e) => {
+  //   // dispatch({
+  //   //   type: DELETE_USER_COMMENT,
+  //   //   id: comment.id,
+  //   // });
+  //   message.success("Click on Yes");
+  // };
   const cancel = (e) => {
     console.log(e);
     message.error("Click on No");
@@ -283,7 +292,35 @@ export default function ModalCyberbugs(props) {
                 <i className="fa fa-link" />
                 <span style={{ paddingRight: 20 }}>Copy link</span>
               </div>
-              <i className="fa fa-trash-alt" style={{ cursor: "pointer" }} />
+              {/* <i
+                //   onClick={() => {
+                //     dispatch({
+                //       type: DELETE_TASK_SAGA,
+                //       taskId: taskDetailModal.taskId,
+                //     });
+                //   }
+                // }
+
+                onClick={showDeleteConfirm()}
+                className="fa fa-trash-alt"
+                style={{ cursor: "pointer" }}
+              /> */}
+              <Popconfirm
+                title="Confirm delete"
+                onConfirm={confirm}
+                onOpenChange={() => console.log("open change")}
+              >
+                <Button type="danger">Delete task</Button>
+              </Popconfirm>
+              {/* <Modal
+                title="Title"
+                open={open}
+                onOk={handleOk}
+                confirmLoading={confirmLoading}
+                onCancel={handleCancel}
+              >
+                <p>{modalText}</p>
+              </Modal> */}
               <button
                 type="button"
                 className="close"
@@ -357,7 +394,7 @@ export default function ModalCyberbugs(props) {
                                 >
                                   {comment.user.name}{" "}
                                   <span>
-                                    {dayjs("2019-01-25").format("DD/MM/YYYY")}
+                                    {dayjs("2022-03-11").format("DD/MM/YYYY")}
                                   </span>
                                 </p>
                                 <p style={{ marginBottom: 5 }}>

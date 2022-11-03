@@ -40,6 +40,7 @@ export function* rootSaga() {
     TaskSaga.theoDoiGetTaskDetailSaga(),
     TaskSaga.theoDoiUpdateTaskStatusSaga(),
     TaskSaga.theoDoiHandleChangePostApi(),
+    TaskSaga.theoDoiDeleteTaskSaga(),
     CommentSaga.theoDoiGetAllComment(),
     CommentSaga.theoDoiCreateComment(),
     CommentSaga.theoDoiDeleteComment(),

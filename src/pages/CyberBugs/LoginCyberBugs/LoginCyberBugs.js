@@ -26,7 +26,7 @@ function LoginCyberBug(props) {
         className="d-flex flex-column justify-content-center align-items-center"
         style={{ height: window.innerHeight }}
       >
-        <h3>Login CyberBugs</h3>
+        <h3>Login Jira Clone</h3>
         <div className="d-flex mt-3">
           <Input
             onChange={handleChange}
