@@ -185,6 +185,8 @@
 
 .main .info .search-block {
   position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .main .info .search-block .search {
@@ -199,7 +201,7 @@
 .main .info .search-block .fa-search {
   position: absolute;
   left: 5%;
-  top: 15%;
+  top: 32%;
   color: #67748b;
 }
 
@@ -219,6 +221,7 @@
   border: 1px solid transparent;
   height: 40px;
   border-radius: 50%;
+  margin-top: 10px;
 }
 
 .main .info .text {
@@ -236,6 +239,8 @@
 }
 
 .main .content .card .card-header {
+  font-size: 13px;
+  font-weight: bold;
   border: none;
   background-color: transparent;
   color: #5e6c84;
@@ -267,6 +272,7 @@
 
 .fa-bookmark {
   color: #5fb03e;
+  margin-right: 10px;
 }
 
 .fa-arrow-up {
@@ -392,18 +398,37 @@
   font-size: 13px;
 }
 
+.status-title {
+  font-weight: bold;
+}
+
 .status .custom-select {
   height: 35px;
   background: #dcdfe4;
   margin-bottom: 20px;
 }
 
+.assignees-title {
+  font-weight: bold;
+}
+.reporter-title {
+  font-weight: bold;
+}
+.priority-title {
+  font-weight: bold;
+}
+.estimate-title {
+  font-weight: bold;
+}
+.time-tracking-title {
+  font-weight: bold;
+}
 .item {
-  margin-right: 20px;
+  /* margin-right: 20px; */
   background: #e9eaf0;
   padding: 5px;
   border-radius: 5px;
-  flex-basis: 50%;
+  /* flex-basis: 50%; */
 }
 
 .item .avatar img {
@@ -416,7 +441,7 @@
 }
 
 .reporter .item {
-  width: fit-content;
+  /* width: fit-content; */
 }
 
 .reporter {

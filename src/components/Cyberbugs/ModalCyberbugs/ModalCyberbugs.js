@@ -22,6 +22,7 @@ import {
   GET_ALL_USER_COMMENT_SAGA,
 } from "../../../redux/constants/Cyberbugs/Comment";
 import { DELETE_TASK_API } from "../../../redux/constants/ToDoListConst";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 const { Option } = Select;
 
 export default function ModalCyberbugs(props) {
@@ -129,7 +130,7 @@ export default function ModalCyberbugs(props) {
               Save
             </button> */}
             <button
-              className="btn btn-primary m-2"
+              className="btn btn-primary ml-0"
               onClick={() => {
                 dispatch({
                   type: HANDLE_CHANGE_POST_API_SAGA,
@@ -270,6 +271,7 @@ export default function ModalCyberbugs(props) {
             <div className="task-title">
               <i className="fa fa-bookmark" />
               <select
+                className="form-select "
                 onChange={(e) => {
                   handleChange(e);
                 }}
@@ -288,12 +290,20 @@ export default function ModalCyberbugs(props) {
             </div>
             <div style={{ display: "flex" }} className="task-click">
               <div>
-                <i className="fab fa-telegram-plane" />
+                <i className="fab fa-telegram-plane mr-2" />
                 <span style={{ paddingRight: 20 }}>Give feedback</span>
               </div>
               <div>
-                <i className="fa fa-link" />
-                <span style={{ paddingRight: 20 }}>Copy link</span>
+                <i className="fa fa-link mr-2" />
+                <a
+                  onClick={() => {
+                    // navigator.clipboard.writeText(state.textToCopy);
+                  }}
+                  href="#"
+                  style={{ paddingRight: 20 }}
+                >
+                  Copy link
+                </a>
               </div>
               {/* <i
                 //   onClick={() => {
@@ -346,7 +356,10 @@ export default function ModalCyberbugs(props) {
                 <div className="col-8">
                   <p className="issue">This is an issue of type: Task.</p>
                   <div className="description">
-                    <p>Description</p>
+                    <p>
+                      Task Description - double click below to edit task
+                      description
+                    </p>
                     {renderDescription()}
                   </div>
                   <div style={{ fontWeight: 500, marginBottom: 10 }}>
@@ -486,7 +499,7 @@ export default function ModalCyberbugs(props) {
                 </div>
                 <div className="col-4">
                   <div className="status">
-                    <h6>STATUS</h6>
+                    <h6 className="status-title">STATUS</h6>
 
                     <select
                       name="statusId"
@@ -518,23 +531,26 @@ export default function ModalCyberbugs(props) {
                     </select>
                   </div>
                   <div className="assignees">
-                    <h6>ASSIGNEES</h6>
+                    <h6 className="assignees-title">ASSIGNEES</h6>
                     <div className="row">
                       {taskDetailModal.assigness.map((user, index) => {
                         return (
-                          <div className="col-6 mt-2">
+                          <div
+                            className="col-12 mt-2"
+                            // style={{ padding: "0px" }}
+                          >
                             <div
                               key={index}
-                              style={{ display: "flex" }}
+                              style={{ display: "flex", alignItems: "center" }}
                               className="item"
                             >
-                              <div className="avatar">
+                              <div className="avatar mr-2">
                                 <img src={user.avatar} alt={user.avatar} />
                               </div>
                               <p className="name">
                                 {user.name}
                                 <i
-                                  className="fa fa-times"
+                                  className="fa fa-times ml-3"
                                   style={{ marginLeft: 5, cursor: "pointer" }}
                                   onClick={() => {
                                     dispatch({
@@ -555,7 +571,7 @@ export default function ModalCyberbugs(props) {
                         );
                       })}
                       <div
-                        className="col-6  mt-2 mb-3"
+                        className="col-6 mt-4"
                         style={{ display: "flex", alignItems: "center" }}
                       >
                         {/* <select
@@ -609,7 +625,7 @@ export default function ModalCyberbugs(props) {
                           style={{ width: 200 }}
                           placeholder="Search to Select"
                           optionFilterProp="label"
-                          value="+ Add more"
+                          value="+ Add more user"
                           onSelect={(value) => {
                             if (value == 0) {
                               return;
@@ -657,22 +673,28 @@ export default function ModalCyberbugs(props) {
                     </div>
                   </div>
                   <div className="reporter mt-4">
-                    <h6>REPORTER</h6>
-                    <div style={{ display: "flex" }} className="item">
-                      <div className="avatar">
+                    <h6 className="reporter-title">REPORTER</h6>
+                    <div
+                      style={{ display: "flex", alignItems: "center" }}
+                      className="item col-12"
+                    >
+                      <div className="avatar mr-2">
                         <img
                           src={require("../../../assets/img/download (1).jfif")}
                           alt="true"
                         />
                       </div>
-                      <p className="name">
+                      <p className="name ml-2">
                         Pickle Rick
-                        <i className="fa fa-times" style={{ marginLeft: 5 }} />
+                        <i
+                          className="fa fa-times ml-3"
+                          style={{ marginLeft: 5 }}
+                        />
                       </p>
                     </div>
                   </div>
                   <div className="priority" style={{ marginBottom: 20 }}>
-                    <h6>PRIORITY</h6>
+                    <h6 className="priority-title">PRIORITY</h6>
                     <select
                       name="priorityId"
                       className="form-control"
@@ -691,7 +713,9 @@ export default function ModalCyberbugs(props) {
                     </select>
                   </div>
                   <div className="estimate">
-                    <h6>ORIGINAL ESTIMATE (HOURS)</h6>
+                    <h6 className="estimate-title">
+                      ORIGINAL ESTIMATE (HOURS)
+                    </h6>
                     <input
                       onChange={(e) => {
                         handleChange(e);
@@ -702,8 +726,8 @@ export default function ModalCyberbugs(props) {
                       className="estimate-hours"
                     />
                   </div>
-                  <div className="time-tracking">
-                    <h6>TIME TRACKING</h6>
+                  <div className="">
+                    <h6 className="time-tracking-title">TIME TRACKING</h6>
                     {renderTimeTracking()}
                   </div>
                   <div style={{ color: "#929398" }}>Create at a month ago</div>

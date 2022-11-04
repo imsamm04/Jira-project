@@ -9,7 +9,7 @@ export default function MenuCyberbugs() {
           <img src={require("../../assets/img/download.jfif")} alt="true" />
         </div>
         <div className="account-info">
-          <h3>Jira - Clone</h3>
+          <h3>Jira Clone</h3>
           <p>Report bugs</p>
         </div>
       </div>
@@ -32,7 +32,7 @@ export default function MenuCyberbugs() {
             className="text-dark"
             activeClassName="active font-weight-bold"
           >
-            Project Management
+            Project Cms
           </NavLink>
         </div>
         <div>
