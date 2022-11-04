@@ -37,12 +37,6 @@ function App() {
       <DrawerCyberBugs />
       <LoadingComponent />
       <Switch>
-        {/* <Route exact path='/home'  render={(propsRoute)=>{
-          return <div>
-                <Header />
-                <Home {...propsRoute} />
-          </div>
-        }}/> */}
         <CyberbugsTemplate path="/" exact Component={ProjectManagement} />
         <HomeTemplate path="/home" exact Component={Home} />
         <HomeTemplate exact path="/contact" Component={Contact} />
@@ -64,6 +58,12 @@ function App() {
             path="/register"
             Component={RegisterCyberbug}
           /> */}
+        {/* <Route exact path='/home'  render={(propsRoute)=>{
+          return <div>
+                <Header />
+                <Home {...propsRoute} />
+          </div>
+        }}/> */}
 
         <HomeTemplate
           exact

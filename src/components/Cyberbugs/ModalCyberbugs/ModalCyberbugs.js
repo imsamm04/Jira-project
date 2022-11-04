@@ -76,13 +76,13 @@ export default function ModalCyberbugs(props) {
     // alert(`The name you entered was: ${name}`);
   };
 
-  // const confirm = (e) => {
-  //   // dispatch({
-  //   //   type: DELETE_USER_COMMENT,
-  //   //   id: comment.id,
-  //   // });
-  //   message.success("Click on Yes");
-  // };
+  const confirmDeleteComment = (e) => {
+    // dispatch({
+    //   type: DELETE_USER_COMMENT,
+    //   id: comment.id,
+    // });
+    message.success("Click on Yes");
+  };
   const cancel = (e) => {
     console.log(e);
     message.error("Click on No");
@@ -424,8 +424,8 @@ export default function ModalCyberbugs(props) {
                                     Delete
                                   </span> */}
                                   <Popconfirm
-                                    title="Are you sure to delete this task?"
-                                    onConfirm={confirm}
+                                    title="Are you sure to delete this comment?"
+                                    onConfirm={confirmDeleteComment}
                                     onCancel={cancel}
                                     okText="Yes"
                                     cancelText="No"
