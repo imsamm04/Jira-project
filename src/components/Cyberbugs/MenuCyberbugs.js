@@ -1,18 +1,42 @@
+import { Avatar, Image } from "antd";
 import React from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import Icon, { LogoutOutlined } from "@ant-design/icons";
 
 export default function MenuCyberbugs() {
+  const userLogin = useSelector(
+    (state) => state.UserLoginCyberBugsReducer.userLogin
+  );
   return (
     <div className="menu">
       <div className="account">
-        <div className="avatar">
-          <img src={require("../../assets/img/download.jfif")} alt="true" />
+        <div className="account-avatar">
+          <img src={require("../../assets/img/jira_logo.png")} alt="true" />
         </div>
         <div className="account-info">
           <h3>Jira Clone</h3>
-          <p>Report bugs</p>
+          <span>Report bugs</span>
+          <div className="account-info">
+            Wellcome back :{userLogin?.name}
+            <div className="mt-2">
+              <Avatar
+                src={userLogin?.avatar}
+                style={{
+                  color: "#f56a00",
+                  backgroundColor: "#fde3cf",
+                  width: "50px",
+                  height: "50px",
+                }}
+              ></Avatar>
+              <div>
+                <LogoutOutlined /> sign out
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
       <div className="control">
         <div>
           <i className="fa fa-paste mr-2" />

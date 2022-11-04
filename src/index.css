@@ -94,14 +94,30 @@
 }
 
 .menu .account {
-  display: flex;
-  padding: 5% 17%;
+  /* display: flex; */
+  padding: 5% 5%;
   margin-bottom: 5%;
 }
 
 .menu .account .avatar {
   padding-top: 13%;
+  align-items: center;
   margin-right: 10px;
+  justify-content: center;
+  display: flex;
+}
+
+.account-avatar {
+  display: flex;
+  justify-content: center;
+}
+
+.account-avatar img {
+  background: blue;
+  width: 60px;
+  border: 1px solid transparent;
+  height: 60px;
+  border-radius: 50%;
 }
 
 .avatar img {
@@ -111,7 +127,7 @@
 .menu .account .account-info {
   padding-top: 12%;
   padding-bottom: 5%;
-  text-align: left;
+  text-align: center;
 }
 
 .menu .account .account-info p:first-child {
@@ -213,6 +229,13 @@
   width: 40px;
   border: 1px solid transparent;
   height: 40px;
+  border-radius: 50%;
+}
+
+.avatar-icon img {
+  width: 50%;
+  border: 1px solid transparent;
+  height: 50%;
   border-radius: 50%;
 }
 

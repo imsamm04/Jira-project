@@ -12,6 +12,7 @@ import * as Yup from "yup";
 import { connect, dispatch } from "react-redux";
 // import {  } from "antd/lib/radio";
 import { registerCyberbugAction } from "../../../redux/actions/CyberBugsActions";
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 function RegisterCyberbug(props) {
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
@@ -86,6 +87,14 @@ function RegisterCyberbug(props) {
         >
           Sign Up
         </Button>
+        <NavLink
+          activeClassName="activeNavItem"
+          activeStyle={{ fontWeight: "bold" }}
+          className="nav-link"
+          to="/login"
+        >
+          Already have account
+        </NavLink>
 
         <div className="social mt-3 d-flex">
           <Button
