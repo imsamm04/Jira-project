@@ -38,7 +38,8 @@ export default function ModalCyberbugs(props) {
   const [content, setContent] = useState(taskDetailModal.description);
   const [visibleEditor, setVisibleEditor] = useState(false);
 
-  const [openModal, setOpenModal] = useState("modal");
+  const [openModal, setOpenModal] = useState(true);
+  const [styleModal, setStyleModal] = useState("");
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState(
     "Are you sure want to delete this task?"
@@ -50,8 +51,9 @@ export default function ModalCyberbugs(props) {
         type: DELETE_TASK_SAGA,
         taskId: taskDetailModal.taskId,
       });
-      setOpenModal("modalOff");
-      setTimeout(() => resolve(null), 3000);
+      setOpenModal(false);
+      // setStyleModal("hide");
+      setTimeout(() => resolve(null), 1000);
     });
 
   const dispatch = useDispatch();
@@ -252,14 +254,15 @@ export default function ModalCyberbugs(props) {
     // });
   }, []);
 
-  return (
+  return openModal ? (
     <div
       className="modal fade"
       id="infoModal"
       tabIndex={-1}
       role="dialog"
       aria-labelledby="infoModal"
-      aria-hidden="true"
+      aria-hidden="false"
+      // style={{ backgroundColor: styleModal }}
     >
       <div className="modal-dialog modal-info">
         <div className="modal-content">
@@ -309,6 +312,9 @@ export default function ModalCyberbugs(props) {
                 title="Confirm delete"
                 onConfirm={confirm}
                 onOpenChange={() => console.log("open change")}
+                // onChange={(e) => {
+                //   handleChange(e);
+                // }}
               >
                 <Button type="danger">Delete task</Button>
               </Popconfirm>
@@ -597,7 +603,7 @@ export default function ModalCyberbugs(props) {
                             })}
                         </select> */}
                         <Select
-                          className="form-control"
+                          // className="form-control"
                           name="lstUser"
                           showSearch
                           style={{ width: 200 }}
@@ -711,5 +717,7 @@ export default function ModalCyberbugs(props) {
         </div>
       </div>
     </div>
+  ) : (
+    ""
   );
 }

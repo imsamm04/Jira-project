@@ -182,15 +182,12 @@ export function* theoDoiHandleChangePostApi() {
 //delete task
 
 function* deleteTaskSaga(action) {
-  debugger;
   try {
     const { status } = yield call(() => taskService.deleteTask(action.taskId));
     if (status === STATUS_CODE.SUCCESS) {
       // history.push("/projectmanagement");
-      yield put({
-        type: "GET_PROJECT_DETAIL",
-        projectId: action.projectId,
-      });
+      yield takeLatest(HANDLE_CHANGE_POST_API_SAGA, handelChangePostApi);
+      notifiFunction("success", "Delete task successfully !");
     }
   } catch (err) {
     console.log(err);
