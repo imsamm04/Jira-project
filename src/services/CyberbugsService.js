@@ -9,6 +9,15 @@ export const cyberbugsService = {
       data: userLogin,
     });
   },
+
+  registerCyberBugs: (userLogin) => {
+    return Axios({
+      url: `${DOMAIN_CYBERBUG}/users/signup`,
+      method: "POST",
+      data: userLogin,
+    });
+  },
+
   getAllProjectCategory: () => {
     return Axios({
       url: `${DOMAIN_CYBERBUG}/ProjectCategory`,

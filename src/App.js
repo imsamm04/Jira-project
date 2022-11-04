@@ -26,6 +26,9 @@ import TodolistRFC from "./pages/Todolist/TodolistRFC";
 import { CyberbugsTemplate } from "./templates/HomeTemplate/CyberbugsTemplate";
 import { HomeTemplate } from "./templates/HomeTemplate/HomeTemplate";
 import { UserLoginTemplate } from "./templates/HomeTemplate/UserLoginTemplate";
+import { UserRegisterTemplate } from "./templates/HomeTemplate/UserRegisterTemplate";
+import RegisterCyberbug from "./pages/CyberBugs/RegisterCyberbug/RegisterCyberbug";
+// import { RegisterCyberbug } from "./templates/HomeTemplate/UserRegisterTemplate";
 
 function App() {
   return (
@@ -51,6 +54,16 @@ function App() {
         <HomeTemplate exact path="/todolistrcc" Component={Todolist} />
         <HomeTemplate exact path="/todolistredux" Component={ToDoListRedux} />
         <UserLoginTemplate exact path="/login" Component={LoginCyberBugs} />
+        <UserRegisterTemplate
+          exact
+          path="/register"
+          Component={RegisterCyberbug}
+        />
+        {/* <UserRegisterTemplate
+            exact
+            path="/register"
+            Component={RegisterCyberbug}
+          /> */}
 
         <HomeTemplate
           exact

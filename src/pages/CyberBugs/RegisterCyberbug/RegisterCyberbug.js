@@ -3,16 +3,17 @@ import {
   UserOutlined,
   UnlockOutlined,
   TwitterOutlined,
+  AliwangwangOutlined,
+  PhoneOutlined,
 } from "@ant-design/icons";
-import { Input, Button } from "antd";
+import { Input, Button, InputNumber } from "antd";
 import { withFormik } from "formik";
 import * as Yup from "yup";
 import { connect, dispatch } from "react-redux";
 // import {  } from "antd/lib/radio";
-import { USER_SIGNIN_API } from "../../../redux/constants/Cyberbugs/Cyberbugs";
-import { singinCyberbugAction } from "../../../redux/actions/CyberBugsActions";
+import { registerCyberbugAction } from "../../../redux/actions/CyberBugsActions";
 
-function LoginCyberBug(props) {
+function RegisterCyberbug(props) {
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
     props;
   console.log("props--- co ca redux dispatch", props);
@@ -26,14 +27,14 @@ function LoginCyberBug(props) {
         className="d-flex flex-column justify-content-center align-items-center"
         style={{ height: window.innerHeight }}
       >
-        <h3>Login Jira Clone</h3>
+        <h3>Register Jira Clone</h3>
         <div className="d-flex mt-3">
           <Input
             onChange={handleChange}
             style={{ width: "100%", minWidth: 300 }}
             name="email"
             size="large"
-            placeholder="email"
+            placeholder="Email"
             prefix={<UserOutlined />}
           />
         </div>
@@ -44,8 +45,29 @@ function LoginCyberBug(props) {
             type="password"
             name="password"
             size="large"
-            placeholder="password"
+            placeholder="Password"
             prefix={<UnlockOutlined />}
+          />
+        </div>
+        <div className="d-flex mt-3">
+          <Input
+            onChange={handleChange}
+            style={{ width: "100%", minWidth: 300 }}
+            name="name"
+            size="large"
+            placeholder="Name"
+            prefix={<AliwangwangOutlined />}
+          />
+        </div>
+        <div className="d-flex mt-3">
+          <Input
+            type="number"
+            onChange={handleChange}
+            style={{ width: "100%", minWidth: 300 }}
+            name="phoneNumber"
+            size="large"
+            placeholder="Phone Number"
+            prefix={<PhoneOutlined />}
           />
         </div>
         <div className="text-danger">{errors.password}</div>
@@ -59,7 +81,7 @@ function LoginCyberBug(props) {
           }}
           className="mt-5"
         >
-          Login
+          Sign Up
         </Button>
 
         <div className="social mt-3 d-flex">
@@ -84,7 +106,7 @@ function LoginCyberBug(props) {
   );
 }
 
-const LoginCyberBugWithFormik = withFormik({
+const RegisterCyberBugWithFormik = withFormik({
   mapPropsToValues: () => ({ email: "", password: "" }),
 
   // Custom sync validation
@@ -97,22 +119,24 @@ const LoginCyberBugWithFormik = withFormik({
       .required("Password is required")
       .min(6, "Password must have in 6 characters")
       .max(32, "Password must have max 32 characters"),
+
+    name: Yup.string()
+      .required("Name is required")
+      .min(6, "Name must have in 4 characters")
+      .max(32, "Name must have max 32 characters"),
+
+    phoneNumber: Yup.string()
+      .required("Phone number is required")
+      .min(6, "Phone number must have in 4 characters")
+      .max(32, "Phone number must have max 32 characters"),
   }),
 
-  handleSubmit: ({ email, password }, { props }) => {
-    // let action = {
-    //   type: USER_SIGNIN_API,
-    //   userLogin: {
-    //     email: values.email,
-    //     password: values.password,
-    //   },
-    // };
-
-    props.dispatch(singinCyberbugAction(email, password));
+  handleSubmit: ({ email, password, name, phoneNumber }, { props }) => {
+    props.dispatch(registerCyberbugAction(email, password, name, phoneNumber));
     console.log("props redux", props);
   },
 
   displayName: "BasicForm",
-})(LoginCyberBug);
+})(RegisterCyberbug);
 
-export default connect()(LoginCyberBugWithFormik);
+export default connect()(RegisterCyberBugWithFormik);
