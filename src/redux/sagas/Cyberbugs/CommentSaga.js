@@ -1,6 +1,7 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { commentService } from "../../../services/CommentService";
 import { STATUS_CODE } from "../../../util/constants/settingSystem";
+import { notifiFunction } from "../../../util/Notification/notificationCyberbugs";
 import {
   CREATE_USER_COMMENT,
   DELETE_USER_COMMENT,
@@ -14,7 +15,7 @@ function* getAllCommentSaga(action) {
     const { data, status } = yield call(() =>
       commentService.getAllComment(action.taskId)
     );
-    console.log("data comment1", data.content);
+    console.log("data comment", data.content);
 
     yield put({ type: GET_ALL_USER_COMMENT, arrComment: data.content });
   } catch (err) {
@@ -57,6 +58,7 @@ function* deleteCommentSaga(action) {
     //     type: "GET_ALL_USER_COMMENT_SAGA",
     //   });
     // }
+    notifiFunction("success", "Delete comment successfully !");
   } catch (err) {
     console.log(err);
   }

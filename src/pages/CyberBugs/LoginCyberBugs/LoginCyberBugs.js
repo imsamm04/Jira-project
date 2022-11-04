@@ -11,6 +11,7 @@ import { connect, dispatch } from "react-redux";
 // import {  } from "antd/lib/radio";
 import { USER_SIGNIN_API } from "../../../redux/constants/Cyberbugs/Cyberbugs";
 import { singinCyberbugAction } from "../../../redux/actions/CyberBugsActions";
+import { Link, NavLink } from "react-router-dom/cjs/react-router-dom.min";
 
 function LoginCyberBug(props) {
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
@@ -37,6 +38,7 @@ function LoginCyberBug(props) {
             prefix={<UserOutlined />}
           />
         </div>
+        <div className="text-danger">{errors.email}</div>
         <div className="d-flex mt-3">
           <Input
             onChange={handleChange}
@@ -61,7 +63,14 @@ function LoginCyberBug(props) {
         >
           Login
         </Button>
-
+        <NavLink
+          activeClassName="activeNavItem"
+          activeStyle={{ fontWeight: "bold" }}
+          className="nav-link"
+          to="/register"
+        >
+          Create new account
+        </NavLink>
         <div className="social mt-3 d-flex">
           <Button
             style={{ backgroundColor: "rgb(59,89,152)" }}

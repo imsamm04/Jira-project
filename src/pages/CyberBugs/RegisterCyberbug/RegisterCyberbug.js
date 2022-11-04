@@ -38,6 +38,7 @@ function RegisterCyberbug(props) {
             prefix={<UserOutlined />}
           />
         </div>
+        <div className="text-danger">{errors.email}</div>
         <div className="d-flex mt-3">
           <Input
             onChange={handleChange}
@@ -49,6 +50,7 @@ function RegisterCyberbug(props) {
             prefix={<UnlockOutlined />}
           />
         </div>
+        <div className="text-danger">{errors.password}</div>
         <div className="d-flex mt-3">
           <Input
             onChange={handleChange}
@@ -59,6 +61,7 @@ function RegisterCyberbug(props) {
             prefix={<AliwangwangOutlined />}
           />
         </div>
+        <div className="text-danger">{errors.name}</div>
         <div className="d-flex mt-3">
           <Input
             type="number"
@@ -70,7 +73,7 @@ function RegisterCyberbug(props) {
             prefix={<PhoneOutlined />}
           />
         </div>
-        <div className="text-danger">{errors.password}</div>
+        <div className="text-danger">{errors.phoneNumber}</div>
         <Button
           htmlType="submit"
           size="large"
@@ -126,7 +129,7 @@ const RegisterCyberBugWithFormik = withFormik({
       .max(32, "Name must have max 32 characters"),
 
     phoneNumber: Yup.string()
-      .required("Phone number is required")
+      .required("Phone number is required (number only)")
       .min(6, "Phone number must have in 4 characters")
       .max(32, "Phone number must have max 32 characters"),
   }),

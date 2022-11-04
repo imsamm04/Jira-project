@@ -379,7 +379,7 @@ export default function ModalCyberbugs(props) {
                     </div>
                   </div>
                   <div className="comment">
-                    <h6>Comment</h6>
+                    <h6>Comments</h6>
                     {arrComment.map((comment, index) => {
                       return (
                         <div key={index} className="lastest-comment">
@@ -408,7 +408,7 @@ export default function ModalCyberbugs(props) {
                                 </p>
                                 <div>
                                   <span style={{ color: "#929398" }}>Edit</span>
-                                  •
+                                  <span> • </span>
                                   {/* <span
                                     style={{
                                       color: "#929398",
