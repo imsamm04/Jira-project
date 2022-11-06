@@ -15,9 +15,8 @@ function* getAllCommentSaga(action) {
     const { data, status } = yield call(() =>
       commentService.getAllComment(action.taskId)
     );
-    console.log("data comment", data.content);
 
-    yield put({ type: GET_ALL_USER_COMMENT, arrComment: data });
+    yield put({ type: GET_ALL_USER_COMMENT, arrComment: data.content });
   } catch (err) {
     console.log(err);
   }

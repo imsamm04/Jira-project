@@ -46,6 +46,8 @@ export default function ModalCyberbugs(props) {
     "Are you sure want to delete this task?"
   );
 
+  console.log("arrComment-->>>", arrComment);
+
   const confirm = () =>
     new Promise((resolve) => {
       dispatch({
@@ -393,7 +395,7 @@ export default function ModalCyberbugs(props) {
                   </div>
                   <div className="comment">
                     {/* <h6>Comments</h6> */}
-                    {arrComment?.map((comment, index) => {
+                    {arrComment.map((comment, index) => {
                       return (
                         <div key={index} className="lastest-comment">
                           <div className="comment-item">

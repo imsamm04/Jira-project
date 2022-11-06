@@ -20,7 +20,7 @@ export default function MenuCyberbugs() {
 
     setTimeout(() => {
       history.push("/login");
-    }, 1000);
+    }, 2000);
   };
 
   return (
