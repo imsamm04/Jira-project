@@ -392,8 +392,8 @@ export default function ModalCyberbugs(props) {
                     </div>
                   </div>
                   <div className="comment">
-                    <h6>Comments</h6>
-                    {arrComment.map((comment, index) => {
+                    {/* <h6>Comments</h6> */}
+                    {arrComment?.map((comment, index) => {
                       return (
                         <div key={index} className="lastest-comment">
                           <div className="comment-item">

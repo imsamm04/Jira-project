@@ -17,37 +17,6 @@ import {
 } from "../../constants/Cyberbugs/TaskConstants";
 import { projectService } from "../../../services/ProjectService";
 
-function* createTaskSaga(action) {
-  try {
-    yield put({
-      type: DISPLAY_LOADING,
-    });
-    const { data, status } = yield call(() =>
-      taskService.createTask(action.taskObject)
-    );
-
-    //Gọi api thành công thì dispatch lên reducer thông qua put
-    if (status === STATUS_CODE.SUCCESS) {
-      console.log("refesh here");
-    }
-    yield put({
-      type: "CLOSE_DRAWER",
-    });
-
-    notifiFunction("success", "Create task successfully !");
-  } catch (err) {
-    console.log(err.response.data);
-  }
-
-  yield put({
-    type: HIDE_LOADING,
-  });
-}
-
-export function* theoDoiCreateTaskSaga() {
-  yield takeLatest("CREATE_TASK_SAGA", createTaskSaga);
-}
-
 function* getTaskDetailSaga(action) {
   const { taskId } = action;
 
@@ -67,6 +36,42 @@ function* getTaskDetailSaga(action) {
 
 export function* theoDoiGetTaskDetailSaga(action) {
   yield takeLatest(GET_TASK_DETAIL_SAGA, getTaskDetailSaga);
+}
+
+function* createTaskSaga(action) {
+  const { taskObject } = action;
+  try {
+    yield put({
+      type: DISPLAY_LOADING,
+    });
+    const { data, status } = yield call(() =>
+      taskService.createTask(action.taskObject)
+    );
+
+    //Gọi api thành công thì dispatch lên reducer thông qua put
+    yield put({
+      type: "GET_PROJECT_DETAIL",
+      projectId: taskObject.projectId,
+    });
+    // if (status === STATUS_CODE.SUCCESS) {
+    //   console.log("refesh here");
+    // }
+    yield put({
+      type: "CLOSE_DRAWER",
+    });
+
+    notifiFunction("success", "Create task successfully !");
+  } catch (err) {
+    console.log(err.response.data);
+  }
+
+  yield put({
+    type: HIDE_LOADING,
+  });
+}
+
+export function* theoDoiCreateTaskSaga() {
+  yield takeLatest("CREATE_TASK_SAGA", createTaskSaga);
 }
 
 //update task
@@ -182,16 +187,27 @@ export function* theoDoiHandleChangePostApi() {
 //delete task
 
 function* deleteTaskSaga(action) {
+  const { taskObject } = action;
   try {
+    yield put({
+      type: DISPLAY_LOADING,
+    });
     const { status } = yield call(() => taskService.deleteTask(action.taskId));
     if (status === STATUS_CODE.SUCCESS) {
       // history.push("/projectmanagement");
       yield takeLatest(HANDLE_CHANGE_POST_API_SAGA, handelChangePostApi);
       notifiFunction("success", "Delete task successfully !");
     }
+    yield put({
+      type: "GET_PROJECT_DETAIL",
+      projectId: taskObject.projectId,
+    });
   } catch (err) {
     console.log(err);
   }
+  yield put({
+    type: HIDE_LOADING,
+  });
 }
 
 export function* theoDoiDeleteTaskSaga() {

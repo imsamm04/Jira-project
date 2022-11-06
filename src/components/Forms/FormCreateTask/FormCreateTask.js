@@ -291,7 +291,7 @@ const frmCreateTask = withFormik({
   validationSchema: Yup.object().shape({}),
   handleSubmit: (values, { props, setSubmitting }) => {
     props.dispatch({ type: "CREATE_TASK_SAGA", taskObject: values });
-    console.log("values", values);
+    console.log("values==>", values);
   },
   displayName: "createTaskForm",
 })(FormCreateTask);

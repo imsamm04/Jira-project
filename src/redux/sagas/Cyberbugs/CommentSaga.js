@@ -17,7 +17,7 @@ function* getAllCommentSaga(action) {
     );
     console.log("data comment", data.content);
 
-    yield put({ type: GET_ALL_USER_COMMENT, arrComment: data.content });
+    yield put({ type: GET_ALL_USER_COMMENT, arrComment: data });
   } catch (err) {
     console.log(err);
   }
@@ -29,9 +29,13 @@ export function* theoDoiGetAllComment(action) {
 
 function* createCommentSaga(action) {
   try {
-    const { status } = yield call(() =>
+    const { data, status } = yield call(() =>
       commentService.createUserComment(action.commentValue)
     );
+
+    // yield put({
+    //   type: GET_ALL_USER_COMMENT_SAGA,
+    // });
 
     // if (status === STATUS_CODE.SUCCESS) {
     //   yield put({
