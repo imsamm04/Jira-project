@@ -187,6 +187,12 @@
   font-size: 14px;
 }
 
+.signout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .main {
   padding-left: 2%;
 }

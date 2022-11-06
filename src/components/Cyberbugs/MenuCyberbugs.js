@@ -3,11 +3,26 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import Icon, { LogoutOutlined } from "@ant-design/icons";
+import { history } from "../../util/history";
+
+const { TOKEN } = require("../../util/constants/settingSystem");
+// src\util\constants\settingSystem.js
 
 export default function MenuCyberbugs() {
+  let user = localStorage.getItem(TOKEN);
+  // const history = useHistory;
   const userLogin = useSelector(
     (state) => state.UserLoginCyberBugsReducer.userLogin
   );
+
+  const userLogOut = () => {
+    localStorage.clear();
+
+    setTimeout(() => {
+      history.push("/login");
+    }, 1000);
+  };
+
   return (
     <div className="menu">
       <div className="account">
@@ -29,8 +44,11 @@ export default function MenuCyberbugs() {
                   height: "50px",
                 }}
               ></Avatar>
-              <div>
-                <LogoutOutlined /> sign out
+              <div className="signout mt-1">
+                <LogoutOutlined className="mr-2" />{" "}
+                <NavLink to="/login" onClick={userLogOut}>
+                  Sign out
+                </NavLink>
               </div>
             </div>
           </div>
