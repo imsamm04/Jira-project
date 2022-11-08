@@ -33,7 +33,7 @@ export default function MenuCyberbugs() {
           <h3>Jira Clone</h3>
           <span>Report bugs</span>
           <div className="account-info">
-            Wellcome back :{userLogin?.name}
+            Hi {userLogin?.name} ^^
             <div className="mt-2">
               <Avatar
                 src={userLogin?.avatar}

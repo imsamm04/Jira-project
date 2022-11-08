@@ -27,14 +27,18 @@ export function* theoDoiGetAllComment(action) {
 }
 
 function* createCommentSaga(action) {
+  const { taskId } = action.commentValue;
   try {
     const { data, status } = yield call(() =>
       commentService.createUserComment(action.commentValue)
     );
 
-    // yield put({
-    //   type: GET_ALL_USER_COMMENT_SAGA,
-    // });
+    // yield put(GET_ALL_USER_COMMENT_SAGA, getAllCommentSaga);
+
+    yield put({
+      type: GET_ALL_USER_COMMENT_SAGA,
+      taskId: taskId,
+    });
 
     // if (status === STATUS_CODE.SUCCESS) {
     //   yield put({
@@ -51,16 +55,23 @@ export function* theoDoiCreateComment(action) {
 }
 
 function* deleteCommentSaga(action) {
+  debugger;
+  const { id } = action;
   try {
-    const { status } = yield call(() =>
+    const { data, status } = yield call(() =>
       commentService.deleteUserComment(action.id)
     );
+    yield put({
+      type: GET_ALL_USER_COMMENT_SAGA,
+      taskId: id,
+    });
 
     // if (status === STATUS_CODE.SUCCESS) {
     //   yield put({
     //     type: "GET_ALL_USER_COMMENT_SAGA",
     //   });
     // }
+
     notifiFunction("success", "Delete comment successfully !");
   } catch (err) {
     console.log(err);

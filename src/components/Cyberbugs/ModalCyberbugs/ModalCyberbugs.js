@@ -80,10 +80,11 @@ export default function ModalCyberbugs(props) {
   };
 
   const confirmDeleteComment = (e) => {
-    // dispatch({
-    //   type: DELETE_USER_COMMENT,
-    //   id: comment.id,
-    // });
+    debugger;
+    dispatch({
+      type: DELETE_USER_COMMENT,
+      id: e,
+    });
     message.success("Click on Yes");
   };
   const cancel = (e) => {
@@ -395,7 +396,7 @@ export default function ModalCyberbugs(props) {
                   </div>
                   <div className="comment">
                     {/* <h6>Comments</h6> */}
-                    {arrComment.map((comment, index) => {
+                    {arrComment?.map((comment, index) => {
                       return (
                         <div key={index} className="lastest-comment">
                           <div className="comment-item">
@@ -440,16 +441,18 @@ export default function ModalCyberbugs(props) {
                                   </span> */}
                                   <Popconfirm
                                     title="Are you sure to delete this comment?"
-                                    onConfirm={confirmDeleteComment}
+                                    onConfirm={() =>
+                                      confirmDeleteComment(comment.id)
+                                    }
                                     onCancel={cancel}
                                     okText="Yes"
                                     cancelText="No"
-                                    onClick={() => {
-                                      dispatch({
-                                        type: DELETE_USER_COMMENT,
-                                        id: comment.id,
-                                      });
-                                    }}
+                                    // onClick={() => {
+                                    //   dispatch({
+                                    //     type: DELETE_USER_COMMENT,
+                                    //     id: comment.id,
+                                    //   });
+                                    // }}
                                   >
                                     <a href="#">Delete</a>
                                   </Popconfirm>

@@ -62,7 +62,7 @@ function RegisterCyberbug(props) {
             prefix={<AliwangwangOutlined />}
           />
         </div>
-        <div className="text-danger">{errors.name}</div>
+        {/* <div className="text-danger">{errors.name}</div> */}
         <div className="d-flex mt-3">
           <Input
             type="number"
@@ -74,7 +74,7 @@ function RegisterCyberbug(props) {
             prefix={<PhoneOutlined />}
           />
         </div>
-        <div className="text-danger">{errors.phoneNumber}</div>
+        {/* <div className="text-danger">{errors.phoneNumber}</div> */}
         <Button
           htmlType="submit"
           size="large"
