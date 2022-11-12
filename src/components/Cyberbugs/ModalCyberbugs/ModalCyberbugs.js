@@ -266,7 +266,7 @@ export default function ModalCyberbugs(props) {
       role="dialog"
       aria-labelledby="infoModal"
       aria-hidden="false"
-      // style={{ backgroundColor: styleModal }}
+    // style={{ backgroundColor: styleModal }}
     >
       <div className="modal-dialog modal-info">
         <div className="modal-content">
@@ -274,7 +274,7 @@ export default function ModalCyberbugs(props) {
             <div className="task-title">
               <i className="fa fa-bookmark" />
               <select
-                className="form-select "
+                className="form-select"
                 onChange={(e) => {
                   handleChange(e);
                 }}
@@ -325,9 +325,9 @@ export default function ModalCyberbugs(props) {
                 title="Confirm delete"
                 onConfirm={confirm}
                 onOpenChange={() => console.log("open change")}
-                // onChange={(e) => {
-                //   handleChange(e);
-                // }}
+              // onChange={(e) => {
+              //   handleChange(e);
+              // }}
               >
                 <Button type="danger">Delete task</Button>
               </Popconfirm>
@@ -345,9 +345,9 @@ export default function ModalCyberbugs(props) {
                 className="close"
                 data-dismiss="modal"
                 aria-label="Close"
-                // onClick={() => {
-                //   setVisibleEditor(false);
-                // }}
+              // onClick={() => {
+              //   setVisibleEditor(false);
+              // }}
               >
                 <span aria-hidden="true">×</span>
               </button>
@@ -447,12 +447,12 @@ export default function ModalCyberbugs(props) {
                                     onCancel={cancel}
                                     okText="Yes"
                                     cancelText="No"
-                                    // onClick={() => {
-                                    //   dispatch({
-                                    //     type: DELETE_USER_COMMENT,
-                                    //     id: comment.id,
-                                    //   });
-                                    // }}
+                                  // onClick={() => {
+                                  //   dispatch({
+                                  //     type: DELETE_USER_COMMENT,
+                                  //     id: comment.id,
+                                  //   });
+                                  // }}
                                   >
                                     <a href="#">Delete</a>
                                   </Popconfirm>
@@ -542,7 +542,7 @@ export default function ModalCyberbugs(props) {
                         return (
                           <div
                             className="col-12 mt-2"
-                            // style={{ padding: "0px" }}
+                          // style={{ padding: "0px" }}
                           >
                             <div
                               key={index}

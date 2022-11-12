@@ -13,7 +13,7 @@ import { GET_ALL_STATUS_SAGA } from "../../../redux/constants/Cyberbugs/StatusCo
 const { Option } = Select;
 function FormCreateTask(props) {
   const children = [];
-  const handleEditorChange = (value, editor) => {};
+  const handleEditorChange = (value, editor) => { };
   const [size, setSize] = useState("middle");
   const handleSizeChange = (e) => {
     setSize(e.target.value);
